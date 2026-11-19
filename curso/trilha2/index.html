@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 2 - Desenvolvimento Agentic e Arquitetura com IA | DEV2K6</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - Part 1: Base overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - Part 2: Blue accent */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    /* Light mode - Emerald accent (for T1 nav link) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+
+    /* Light mode - Purple accent (for T3 nav link) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - Part 3: Remove gradients + special colors */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - Part 4: Nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="../../index.html" class="text-yellow-400 font-bold text-lg hover:text-yellow-300 transition-colors">
+            <span class="text-xl">&#x1F4BB;</span> DEV2K6
+          </a>
+          <span class="text-neutral-500 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline transition-colors">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T1 Fundamentos</a>
+            <a href="index.html" class="text-blue-400 bg-blue-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T2 Agentic</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T3 Escala</a>
+          </div>
+
+          <div class="flex md:hidden items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T1</a>
+            <a href="index.html" class="text-blue-400 bg-blue-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T2</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T3</a>
+          </div>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" title="Alternar tema">
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="icon-moon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-24 pb-16 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-900"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-start gap-3 mb-6">
+        <span class="bg-blue-500/20 text-blue-400 text-sm font-bold px-4 py-1.5 rounded-full border border-blue-500/30">Trilha 2</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-neutral-100 mb-4">
+        Desenvolvimento Agentic e Arquitetura com IA
+      </h1>
+      <p class="text-lg text-neutral-400 max-w-3xl mb-8 leading-relaxed">
+        Agentes, MCP, RAG e Spec-Driven Development. O kit completo pra construir software com IA de forma estruturada
+      </p>
+
+      <!-- Stats -->
+      <div class="flex flex-wrap justify-start gap-4">
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-blue-400">5</span>
+          <span class="text-neutral-400 text-sm ml-2">Modulos</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-blue-400">~30</span>
+          <span class="text-neutral-400 text-sm ml-2">Topicos</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-blue-400">~2.5h</span>
+          <span class="text-neutral-400 text-sm ml-2">Duracao</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-blue-400">Avancado</span>
+          <span class="text-neutral-400 text-sm ml-2">Nivel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module Cards -->
+  <section class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- Module 2.1 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-4 mb-2">
+          <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/30 flex-shrink-0 mt-1">2.1</span>
+          <h2 class="text-2xl font-bold text-neutral-100">MCP: Model Context Protocol</h2>
+        </div>
+        <p class="text-neutral-400 mb-6 ml-14">O protocolo que conecta LLMs ao mundo real. Ferramentas, dados e servicos acessiveis de forma padronizada.</p>
+
+        <div class="space-y-3 mb-6">
+          <!-- Topic 1 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t21-1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F50C; Fundamentos de MCP - Por que se tornou infraestrutura (1.864+ servidores registrados)</span>
+            </button>
+            <div id="t21-1" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">MCP (Model Context Protocol) e um protocolo aberto criado pela Anthropic que padroniza como LLMs se conectam a fontes de dados e ferramentas externas. Funciona como uma "porta USB-C" para IA: uma interface unica que conecta qualquer modelo a qualquer recurso.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Com 1.864+ servidores registrados e adocao por todas as grandes plataformas (Claude, Cursor, Windsurf, VS Code), MCP nao e mais experimental. E infraestrutura. Saber usar e construir servidores MCP e o que separa quem usa IA de quem constroi sistemas com IA.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Protocolo cliente-servidor, JSON-RPC 2.0, tools/resources/prompts como primitivas, host vs client vs server, ciclo de vida de conexao, capability negotiation.</p></div>
+            </div>
+          </div>
+          <!-- Topic 2 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t21-2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F310; HTTP como transporte - Padrao em producao substituindo stdio</span>
+            </button>
+            <div id="t21-2" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">A evolucao do transporte MCP de stdio (standard input/output) para Streamable HTTP. Stdio funciona bem localmente, mas em producao voce precisa de HTTP para escalar, autenticar e monitorar conexoes entre clientes e servidores MCP.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Servidores MCP em producao precisam de autenticacao (OAuth 2.1), rate limiting, logging e deploy distribuido. Stdio nao suporta nada disso. HTTP com SSE (Server-Sent Events) se tornou o padrao para servidores remotos.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Streamable HTTP transport, Server-Sent Events (SSE), OAuth 2.1 para autenticacao, stdio vs HTTP trade-offs, session management, reconnection handling.</p></div>
+            </div>
+          </div>
+          <!-- Topic 3 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t21-3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F4CB; MCP Server Cards - .well-known/mcp para descoberta automatica</span>
+            </button>
+            <div id="t21-3" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">MCP Server Cards sao documentos JSON publicados em .well-known/mcp.json que descrevem as capacidades de um servidor MCP. Permitem que clientes descubram automaticamente quais ferramentas, recursos e prompts um servidor oferece, sem configuracao manual.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">A descoberta automatica elimina a configuracao manual de servidores. Em vez de listar endpoints e capacidades num arquivo de config, o cliente simplesmente consulta o .well-known/mcp.json e sabe o que esta disponivel. Isso habilita composicao dinamica de ferramentas.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Well-known URIs, server card schema, capability advertisement, tool discovery, dynamic registration, versioning de capacidades.</p></div>
+            </div>
+          </div>
+          <!-- Topic 4 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t21-4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F517; Conectando LLMs - Ferramentas, arquivos, terminal, docs e servicos externos</span>
+            </button>
+            <div id="t21-4" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">A pratica de conectar LLMs a recursos do mundo real via MCP: sistemas de arquivos, terminais, bancos de dados, APIs, documentacao e servicos SaaS. Cada conexao e um servidor MCP que expoe tools (acoes), resources (dados) ou prompts (templates).</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">O poder de um LLM isolado e limitado. Quando voce conecta um modelo ao GitHub, ao banco de dados, ao Slack e ao sistema de arquivos via MCP, ele se torna um agente capaz de executar tarefas reais. A diferenca entre "chatbot" e "assistente de engenharia" esta nas conexoes.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Tool definitions com JSON Schema, resources como URIs enderecaveis, prompts como templates reutilizaveis, composicao de multiplos servidores, sandboxing e permissoes.</p></div>
+            </div>
+          </div>
+          <!-- Topic 5 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t21-5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F3D7;&#xFE0F; Servidor MCP - Estrutura de um servidor e desenho de capacidades</span>
+            </button>
+            <div id="t21-5" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">A construcao de um servidor MCP do zero: definir quais ferramentas expor, como estruturar inputs/outputs, como validar requisicoes e como fazer o deploy. Um servidor MCP e basicamente um processo que fala JSON-RPC e expoe capacidades que um LLM pode invocar.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Usar servidores prontos e o basico. Construir os seus e o que transforma qualquer sistema legado, API interna ou workflow proprietario em algo que um LLM pode operar. Voce cria a ponte entre a IA e o seu dominio especifico.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">@modelcontextprotocol/sdk, handler patterns, input validation com Zod/JSON Schema, error handling, logging estruturado, testes de servidor, deploy com Docker.</p></div>
+            </div>
+          </div>
+          <!-- Topic 6 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t21-6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x26A0;&#xFE0F; Riscos operacionais - Agentes com acesso a ferramentas reais, quando evitar</span>
+            </button>
+            <div id="t21-6" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Os riscos concretos de dar a um LLM acesso a ferramentas que afetam o mundo real: deletar arquivos, executar comandos, fazer deploy, enviar emails. Inclui prompt injection via tools, exfiltracao de dados, acao em loop destrutivo e falta de auditoria.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Um agente com acesso ao terminal pode rodar rm -rf se o prompt for manipulado. Um agente com acesso ao email pode enviar dados sensiveis. Entender os riscos antes de dar poder a um LLM e a diferenca entre engenharia e negligencia.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Principio do menor privilegio, tool poisoning, prompt injection indireta via resources, sandboxing de execucao, human-in-the-loop, audit logging, rate limiting, permissoes granulares.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-start gap-3 ml-14">
+          <button onclick="openModal('modulo-2-1.html')" class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-500/10 transition-colors">Ver em Modal</button>
+          <a href="modulo-2-1.html" class="text-neutral-400 hover:text-blue-400 text-sm font-medium transition-colors">Ver Completo &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Module 2.2 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-4 mb-2">
+          <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/30 flex-shrink-0 mt-1">2.2</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Agentes e orquestracao multiagente</h2>
+        </div>
+        <p class="text-neutral-400 mb-6 ml-14">De agentes individuais a pipelines de producao. Padroes de orquestracao, frameworks e estrategias de custo.</p>
+
+        <div class="space-y-3 mb-6">
+          <!-- Topic 1 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t22-1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F916; Agentes especializados - Implementacao, revisao, documentacao, testes, investigacao</span>
+            </button>
+            <div id="t22-1" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Agentes de IA especializados em tarefas especificas do ciclo de desenvolvimento. Em vez de um agente generalista que faz tudo mal, voce cria agentes focados: um que escreve codigo, outro que revisa, outro que gera testes, outro que documenta, outro que investiga bugs.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Agentes especializados produzem output de qualidade muito superior a um agente generico. O system prompt e afinado, as tools sao relevantes, o contexto e focado. Times que adotam esse padrao reportam reducao de 40-60% no retrabalho de code review.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">System prompts especializados, tool sets limitados por papel, context isolation, handoff entre agentes, agent profiles, separation of concerns aplicada a IA.</p></div>
+            </div>
+          </div>
+          <!-- Topic 2 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t22-2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F3D7;&#xFE0F; Padroes de orquestracao - Hierarquico, orchestrator-worker, pipeline workflow</span>
+            </button>
+            <div id="t22-2" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">As arquiteturas de como multiplos agentes trabalham juntos. Hierarquico: um agente supervisor delega para sub-agentes. Orchestrator-worker: um agente central distribui tarefas e agrega resultados. Pipeline: agentes em sequencia, cada um transformando o output do anterior.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Escolher o padrao errado de orquestracao multiplica custo e latencia sem ganho de qualidade. Um pipeline simples resolve 80% dos casos. Orquestracao complexa so compensa quando ha interdependencias reais entre as tarefas.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Hierarchical delegation, fan-out/fan-in, pipeline sequencing, DAG de execucao, state sharing entre agentes, error propagation, timeout e retry strategies.</p></div>
+            </div>
+          </div>
+          <!-- Topic 3 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t22-3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F504; Pipeline de producao - Feature Author &rarr; Test Gen &rarr; Code Review &rarr; Security &rarr; CI/CD</span>
+            </button>
+            <div id="t22-3" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Um pipeline concreto de agentes para desenvolvimento de features: o Feature Author escreve o codigo, o Test Gen cria testes, o Code Reviewer identifica problemas, o Security Scanner verifica vulnerabilidades, e o CI/CD Agent integra e faz deploy.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Este e o padrao que times de ponta estao adotando. Cada agente ve apenas o que precisa, opera com system prompt afinado e produz output estruturado que alimenta o proximo estagio. O resultado e uma feature que sai com testes, revisao e scan de seguranca inclusos.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Stage gates, artifact passing, feedback loops entre estagios, quality gates automatizados, rollback em caso de falha, metricas por estagio do pipeline.</p></div>
+            </div>
+          </div>
+          <!-- Topic 4 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t22-4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F9F0; Frameworks - Anthropic Agent SDK, OpenAI Agents SDK, Google ADK, LangGraph, CrewAI</span>
+            </button>
+            <div id="t22-4" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Os principais frameworks para construir agentes em 2026. Anthropic Agent SDK e OpenAI Agents SDK sao oficiais dos provedores. Google ADK (Agent Development Kit) e o mais recente. LangGraph oferece grafos de estado. CrewAI foca em papeis e colaboracao.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Cada framework tem trade-offs reais. SDKs oficiais sao simples mas limitam a um provedor. LangGraph da controle fino mas adiciona complexidade. CrewAI e rapido pra prototipar mas pode ser limitante em producao. Escolher errado custa meses de reescrita.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Agent primitives por framework, tool integration, memory/state management, observabilidade, vendor lock-in vs portabilidade, custos em escala, maturidade e comunidade.</p></div>
+            </div>
+          </div>
+          <!-- Topic 5 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t22-5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F4B0; Estrategia de modelos - Baratos pra triagem (Haiku), capazes pra raciocinio (Opus)</span>
+            </button>
+            <div id="t22-5" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">A pratica de usar modelos diferentes para tarefas diferentes dentro do mesmo sistema. Modelos baratos e rapidos (Haiku, GPT-4o-mini) fazem triagem, classificacao e tarefas simples. Modelos capazes (Opus, o3) fazem raciocinio complexo, revisao e decisoes criticas.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Usar Opus pra tudo custa 10-50x mais que uma estrategia mista. Um roteador com Haiku que decide qual modelo usar por tarefa reduz custos em 60-80% sem perda perceptivel de qualidade. Em escala, isso e a diferenca entre viavel e inviavel.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Model routing, cost-per-token analysis, task complexity classification, fallback chains, quality gates por modelo, A/B testing de modelos, budget caps.</p></div>
+            </div>
+          </div>
+          <!-- Topic 6 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t22-6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x2696;&#xFE0F; Multi vs Single agent - Quando a complexidade compensa, loops simples vencem</span>
+            </button>
+            <div id="t22-6" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">A analise critica de quando usar multiplos agentes versus um agente unico com um loop bem desenhado. Multi-agent adiciona complexidade de comunicacao, state management e debugging. Um agente solo com boas tools e iteracao resolve a maioria dos problemas reais.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">A tendencia natural e over-engineer com multi-agent porque parece mais sofisticado. Na pratica, a maioria dos workflows de desenvolvimento funciona melhor com um agente iterativo que tem acesso as tools certas. Multi-agent compensa quando ha papeis genuinamente distintos com contextos incompativeis.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Complexidade acidental vs essencial, single-agent loop patterns, when to split, communication overhead, context window management em multi-agent, debugging distribuido.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-start gap-3 ml-14">
+          <button onclick="openModal('modulo-2-2.html')" class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-500/10 transition-colors">Ver em Modal</button>
+          <a href="modulo-2-2.html" class="text-neutral-400 hover:text-blue-400 text-sm font-medium transition-colors">Ver Completo &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Module 2.3 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-4 mb-2">
+          <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/30 flex-shrink-0 mt-1">2.3</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Spec-Driven Development com IA</h2>
+        </div>
+        <p class="text-neutral-400 mb-6 ml-14">Especificacao primeiro, codigo depois. Design docs, decomposicao e testes como contrato entre humano e agente.</p>
+
+        <div class="space-y-3 mb-6">
+          <!-- Topic 1 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t23-1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F4CB; Do problema ao design doc - Partir de requisitos antes de gerar codigo</span>
+            </button>
+            <div id="t23-1" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">A pratica de comecar qualquer feature ou sistema com um design document estruturado, antes de escrever uma linha de codigo. O design doc define o problema, as restricoes, a abordagem tecnica, as alternativas consideradas e os criterios de sucesso.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Sem spec, um agente de IA gera codigo que resolve o problema que ele imagina, nao o que voce precisa. Com spec, voce da ao agente uma descricao precisa do que construir, reducao de ambiguidade de 80-90%. O design doc e o contrato entre a intencao humana e a execucao da IA.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Problem statement, constraints e non-goals, abordagem tecnica, alternativas consideradas, criterios de aceitacao, formato RFC/ADR, iteracao com IA no design.</p></div>
+            </div>
+          </div>
+          <!-- Topic 2 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t23-2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F31F; GitHub Spec Kit - 72.7k stars, suporte a 22+ plataformas de agentes</span>
+            </button>
+            <div id="t23-2" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">O GitHub Spec Kit e um framework open-source para spec-driven development com IA. Com 72.7k stars, se tornou o padrao de facto para estruturar requisitos que alimentam agentes de codigo. Suporta 22+ plataformas incluindo Claude Code, Cursor, Copilot e Windsurf.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Em vez de inventar seu proprio formato de spec, voce usa um que ja foi validado por milhares de projetos. O Spec Kit gera specs que os agentes entendem nativamente, com semelhantica clara e estrutura consistente. Adocao massiva significa documentacao e tooling ricos.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Spec templates, agent-compatible formats, multi-platform specs, spec validation, integration com CI, spec versioning, community patterns.</p></div>
+            </div>
+          </div>
+          <!-- Topic 3 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t23-3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F50D; Decomposicao com IA - Escopo, premissas e identificacao de riscos</span>
+            </button>
+            <div id="t23-3" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Usar IA para decompor um problema grande em partes implementaveis, identificando premissas implicitas, riscos tecnicos e dependencias ocultas. A IA funciona como um "sparring partner" que questiona o escopo e revela blind spots no design.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Decomposicao ruim e a causa numero 1 de projetos que falham. A IA consegue identificar riscos que o dev nao ve porque esta proximo demais do problema. Usar IA para questionar premissas antes de codar economiza semanas de retrabalho.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Task decomposition prompts, assumption surfacing, risk matrix automatizada, dependency graph generation, scope validation, MECE decomposition com IA.</p></div>
+            </div>
+          </div>
+          <!-- Topic 4 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t23-4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F4C4; Spec como contrato - Specs alimentam agentes, testes e CI simultaneamente</span>
+            </button>
+            <div id="t23-4" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Tratar a spec como a unica fonte de verdade que alimenta tres coisas simultaneamente: o agente de codigo (que implementa), o agente de testes (que valida) e o CI (que verifica). A spec nao e documentacao passiva, e um contrato executavel.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Quando spec, codigo e testes divergem, voce tem bugs. Quando a spec e o contrato central, qualquer mudanca no requisito se propaga automaticamente para testes e implementacao. Isso elimina a classe inteira de bugs causada por "o dev entendeu diferente do PM".</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Spec como single source of truth, derivacao automatica de testes, spec-to-code traceability, change propagation, spec drift detection, contract testing.</p></div>
+            </div>
+          </div>
+          <!-- Topic 5 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t23-5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F9EA; Test-Driven com IA - Agente de testes e de codigo sem compartilhar contexto</span>
+            </button>
+            <div id="t23-5" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Um padrao onde dois agentes trabalham a partir da mesma spec mas sem ver o trabalho um do outro. O agente de testes gera os testes a partir da spec. O agente de codigo implementa a partir da mesma spec. Se os testes passam, a implementacao esta correta. Se falham, ha divergencia.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Quando o mesmo agente escreve codigo e testes, os testes tendem a validar o que o codigo faz (nao o que deveria fazer). Separar os agentes cria tensao saudavel: os testes refletem a spec, o codigo reflete a spec, e a discordancia entre eles revela bugs reais.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Context isolation entre agentes, spec como unico input compartilhado, test-first vs code-first race, red-green-refactor com IA, adversarial testing, mutation testing com agentes.</p></div>
+            </div>
+          </div>
+          <!-- Topic 6 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t23-6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x1F517; Alinhamento continuo - Requisito, design e implementacao sempre sincronizados</span>
+            </button>
+            <div id="t23-6" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">A pratica de manter requisitos, design docs e codigo em sincronia permanente, usando IA para detectar drift entre as camadas. Quando um requisito muda, a IA identifica quais design docs e quais trechos de codigo precisam ser atualizados.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Em projetos reais, requisitos mudam toda semana. Sem alinhamento continuo, em dois meses o codigo nao reflete mais o design, que nao reflete mais os requisitos. Essa divergencia e a principal fonte de bugs em sistemas complexos. A IA pode automatizar a deteccao.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Drift detection, bi-directional traceability, automated impact analysis, change cascade, spec CI checks, living documentation, architecture decision records (ADRs) com IA.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-start gap-3 ml-14">
+          <button onclick="openModal('modulo-2-3.html')" class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-500/10 transition-colors">Ver em Modal</button>
+          <a href="modulo-2-3.html" class="text-neutral-400 hover:text-blue-400 text-sm font-medium transition-colors">Ver Completo &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Module 2.4 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-4 mb-2">
+          <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/30 flex-shrink-0 mt-1">2.4</span>
+          <h2 class="text-2xl font-bold text-neutral-100">RAG e sistemas com base de conhecimento</h2>
+        </div>
+        <p class="text-neutral-400 mb-6 ml-14">Retrieval-Augmented Generation aplicado a codigo. Chunking, busca, reranking e infraestrutura de indice.</p>
+
+        <div class="space-y-3 mb-6">
+          <!-- Topic 1 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t24-1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F4DA; Fundamentos de RAG - Retrieval-Augmented Generation e quando faz sentido</span>
+            </button>
+            <div id="t24-1" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">RAG e a tecnica de buscar informacao relevante de uma base de dados e injetar no contexto do LLM antes de gerar a resposta. Em vez de depender apenas do conhecimento treinado no modelo, voce da acesso a documentacao atualizada, codigo do projeto e dados especificos do dominio.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">LLMs tem knowledge cutoff e nao conhecem seu codigo privado. RAG resolve os dois problemas: da acesso a informacao atualizada e ao contexto especifico do seu projeto. Para codebases grandes (100k+ linhas), RAG e a unica forma viavel de dar contexto relevante sem estourar a context window.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Retrieval pipeline, embedding models, vector stores, semantic search vs keyword search, context injection, relevance scoring, RAG vs fine-tuning trade-offs.</p></div>
+            </div>
+          </div>
+          <!-- Topic 2 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t24-2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F333; Chunking inteligente - AST boundaries, nao contagem de linhas</span>
+            </button>
+            <div id="t24-2" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Chunking e como voce divide o codigo fonte em pedacos para indexar. Chunking burro divide por linhas fixas (500 linhas por chunk). Chunking inteligente usa AST (Abstract Syntax Tree) para dividir por funcoes, classes e modulos, respeitando os limites semanticos do codigo.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Chunking por linhas corta funcoes no meio, mistura contextos e produz resultados irrelevantes na busca. Chunking por AST mantém a coerencia semantica: cada chunk e uma funcao completa, uma classe inteira, um modulo com seus imports. A qualidade do RAG depende diretamente da qualidade do chunking.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Tree-sitter para parsing multi-linguagem, AST node types, hierarchical chunking, overlap strategies, chunk size vs retrieval quality, docstring inclusion, import resolution.</p></div>
+            </div>
+          </div>
+          <!-- Topic 3 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t24-3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F50E; Two-stage retrieval - Vector search seguido de LLM reranking</span>
+            </button>
+            <div id="t24-3" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Um pipeline de busca em dois estagios: primeiro, vector search retorna os top-K candidatos (rapido e barato). Depois, um LLM reranker avalia esses candidatos e reordena por relevancia real (mais preciso mas mais caro). Combina velocidade com precisao.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Vector search sozinho retorna resultados por similaridade semantica, mas "similaridade" nao e "relevancia". Um chunk sobre autenticacao pode ser semanticamente similar a um sobre autorizacao sem ser relevante. O LLM reranker entende a intencao da query e filtra o que realmente importa.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Bi-encoder vs cross-encoder, retrieval recall vs precision, top-K selection, reranking prompts, hybrid search (vector + BM25), Reciprocal Rank Fusion, cost vs quality curve.</p></div>
+            </div>
+          </div>
+          <!-- Topic 4 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t24-4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F3F7;&#xFE0F; Metadata annotation - Tags de linguagem, tipo de funcao, dependencias</span>
+            </button>
+            <div id="t24-4" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Enriquecer cada chunk de codigo com metadata estruturada: linguagem, tipo (funcao, classe, test, config), dependencias, camada arquitetural (controller, service, repository), ultimo autor, frequencia de mudanca. Essa metadata permite filtros na busca e melhora drasticamente a precisao.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Sem metadata, uma busca por "funcao de autenticacao" retorna testes, configs e implementacoes misturados. Com metadata, voce filtra "tipo=implementacao, camada=service" e recebe exatamente o que precisa. A metadata transforma busca generica em busca precisa.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Metadata schema design, automated tagging com AST, git blame integration, dependency extraction, filtered search, faceted retrieval, metadata freshness.</p></div>
+            </div>
+          </div>
+          <!-- Topic 5 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t24-5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F9F0; Ferramentas RAG - CodeRAG + MCP, code-graph-rag, CocoIndex, Tree-sitter</span>
+            </button>
+            <div id="t24-5" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">O ecossistema de ferramentas para implementar RAG em codebases. CodeRAG integra com MCP para servir contexto. Code-graph-rag usa grafos de dependencia. CocoIndex faz indexacao incremental. Tree-sitter faz parsing multi-linguagem para chunking estrutural.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Implementar RAG do zero e um projeto de meses. Essas ferramentas resolvem os problemas ja conhecidos (chunking, indexacao, busca, serving) e deixam voce focar no que importa: a qualidade do contexto que chega ao LLM. Saber qual ferramenta usar pra cada caso acelera em 10x.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">CodeRAG server via MCP, graph-based retrieval, incremental indexing, Tree-sitter grammars, embedding models para codigo, vector databases (Qdrant, Chroma, Pinecone), self-hosted vs managed.</p></div>
+            </div>
+          </div>
+          <!-- Topic 6 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t24-6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x267B;&#xFE0F; Indice como infraestrutura - CI/CD re-index, embeddings atualizados, MCP serve contexto</span>
+            </button>
+            <div id="t24-6" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Tratar o indice RAG como infraestrutura de primeira classe: atualizado automaticamente no CI/CD a cada merge, com embeddings regenerados para arquivos modificados, e servido via MCP para que qualquer agente tenha acesso ao contexto atualizado.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Um indice desatualizado e pior que nenhum indice: o LLM recebe contexto obsoleto e gera codigo baseado em APIs que mudaram. Integrar re-indexacao no CI/CD garante que o indice esta sempre fresco. Servir via MCP garante que qualquer agente pode consumir.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Incremental re-indexing, CI/CD hooks para indexacao, embedding invalidation, MCP resource serving, cache de embeddings, monitoring de freshness, cost of re-indexing.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-start gap-3 ml-14">
+          <button onclick="openModal('modulo-2-4.html')" class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-500/10 transition-colors">Ver em Modal</button>
+          <a href="modulo-2-4.html" class="text-neutral-400 hover:text-blue-400 text-sm font-medium transition-colors">Ver Completo &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Module 2.5 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-4 mb-2">
+          <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/30 flex-shrink-0 mt-1">2.5</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Refatoracao, legado e evolucao arquitetural com IA</h2>
+        </div>
+        <p class="text-neutral-400 mb-6 ml-14">IA aplicada a sistemas existentes. Leitura assistida, mapeamento de dependencias, refatoracao em massa e arquitetura.</p>
+
+        <div class="space-y-3 mb-6">
+          <!-- Topic 1 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t25-1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F4D6; Leitura assistida - Bases grandes e sistemas complexos com apoio de IA</span>
+            </button>
+            <div id="t25-1" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Usar IA para entender codebases grandes e sistemas complexos que levam semanas para um dev novo compreender. A IA navega pelo codigo, explica padroes, identifica fluxos de dados e mapeia relacoes entre componentes, funcionando como um "guia interativo" da codebase.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Onboarding em codebases grandes leva 3-6 meses. Com leitura assistida por IA, esse tempo cai para dias. Alem disso, devs seniors que ja conhecem o sistema usam leitura assistida para explorar partes do codigo que nunca tocaram, entendendo impactos antes de mudar.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Code navigation com IA, call graph exploration, "explain this function in context", dependency chain walking, architectural overview generation, pattern recognition em codebases.</p></div>
+            </div>
+          </div>
+          <!-- Topic 2 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t25-2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F5FA;&#xFE0F; Mapeamento de dependencias - Hotspots, acoplamento e divida tecnica</span>
+            </button>
+            <div id="t25-2" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Usar IA para mapear dependencias entre modulos, identificar hotspots (codigo que muda muito e causa muitos bugs), medir acoplamento entre componentes e quantificar divida tecnica. A IA combina analise estatica do codigo com historico do git para produzir um mapa completo.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Voce nao pode refatorar o que nao entende. Antes de mexer em codigo legado, precisa saber quais modulos sao acoplados, quais sao hotspots de bugs e onde a divida tecnica e mais cara. Sem esse mapa, refatoracao e um tiro no escuro que frequentemente piora a situacao.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Dependency graph generation, churn analysis (git log), complexity metrics (cyclomatic, cognitive), coupling score, hotspot detection, tech debt quantification, risk scoring.</p></div>
+            </div>
+          </div>
+          <!-- Topic 3 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t25-3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F504; Refatoracao em massa - Seguranca e consistencia em mudancas amplas</span>
+            </button>
+            <div id="t25-3" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Usar IA para aplicar refatoracoes consistentes em centenas de arquivos simultaneamente. Renomear APIs, migrar padroes, atualizar imports, converter tipos. A IA entende o contexto semantico de cada mudanca, nao apenas faz find-and-replace.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Refatoracoes grandes feitas manualmente levam semanas e introduzem inconsistencias. Com IA, uma migracao de API que tocaria 200 arquivos pode ser feita em horas, com cada transformacao respeitando o contexto local do arquivo. A IA ajusta o padrao conforme o uso.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Semantic codemods, batch transformation com review, consistency verification, rollback safety, test-first refactoring, incremental migration, feature flags em refatoracao.</p></div>
+            </div>
+          </div>
+          <!-- Topic 4 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t25-4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F3D7;&#xFE0F; Modularizacao com IA - Reorganizacao de responsabilidades e coesao</span>
+            </button>
+            <div id="t25-4" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Usar IA para identificar responsabilidades misturadas em modulos e propor reorganizacoes que aumentam a coesao e reduzem o acoplamento. A IA analisa quais funcoes/classes sao usadas juntas, quais pertencem a dominios diferentes e sugere uma nova estrutura modular.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Codigo legado tende a acumular responsabilidades em "god modules" que fazem de tudo. Separar manualmente e arriscado porque voce nao enxerga todas as dependencias. A IA varre o grafo de dependencias inteiro e propoe cortes que minimizam breaking changes.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Cohesion analysis, responsibility extraction, module boundary detection, interface design, dependency inversion, strangler fig pattern, incremental extraction.</p></div>
+            </div>
+          </div>
+          <!-- Topic 5 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t25-5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F355; Feature slice vs vertical slice - Estrategias de particao de codigo</span>
+            </button>
+            <div id="t25-5" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Duas estrategias de organizar codigo: feature slice agrupa por funcionalidade (tudo de "pagamentos" junto), vertical slice agrupa por camada tecnica (todos os controllers juntos, todos os services juntos). Cada abordagem tem implicacoes diferentes pra IA e pra manutenibilidade.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">A organizacao do codigo afeta diretamente a qualidade do contexto que a IA recebe. Feature slices dao contexto completo de uma funcionalidade num unico diretorio. Vertical slices forcam a IA a navegar entre camadas. A escolha impacta a eficacia de agentes e a velocidade de desenvolvimento.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Feature-based architecture, vertical slice architecture, bounded contexts, context locality para IA, colocation de arquivos, shared kernel, trade-offs de cada abordagem.</p></div>
+            </div>
+          </div>
+          <!-- Topic 6 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t25-6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x1F3DB;&#xFE0F; Arquiteturas com IA - DDD, Hexagonal, Clean e repositorio IA-first</span>
+            </button>
+            <div id="t25-6" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-blue-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Como padroes arquiteturais classicos (DDD, Hexagonal, Clean Architecture) se adaptam a era da IA. Repositorios IA-first sao organizados com CLAUDE.md/AGENTS.md na raiz, specs em /docs, context files por feature e convencoes explicitas que agentes entendem.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Arquiteturas que funcionavam bem para devs humanos podem ser hostis para agentes. Clean Architecture com sua separacao estrita e otima para humanos mas multiplica o contexto necessario para um agente. Repositorios IA-first balanceiam separacao com localidade de contexto.</p></div>
+              <div><span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">DDD aggregate roots como context boundaries, Hexagonal ports/adapters para tool integration, IA-first repo structure, CLAUDE.md como system prompt, AGENTS.md para convencoes, context files (.cursorrules, .github/copilot), documentation-as-context.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-start gap-3 ml-14">
+          <button onclick="openModal('modulo-2-5.html')" class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-500/10 transition-colors">Ver em Modal</button>
+          <a href="modulo-2-5.html" class="text-neutral-400 hover:text-blue-400 text-sm font-medium transition-colors">Ver Completo &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="../trilha1/index.html" class="flex items-center gap-2 text-emerald-400 hover:bg-emerald-500/10 px-4 py-3 rounded-xl transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="font-medium">Trilha Anterior (T1)</span>
+        </a>
+        <a href="../trilha3/index.html" class="flex items-center gap-2 text-purple-400 hover:bg-purple-500/10 px-4 py-3 rounded-xl transition-colors">
+          <span class="font-medium">Proxima Trilha (T3)</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-dark-700 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>DEV2K6 - Engenharia de Software com IA Avancada - 2026</p>
+      <p class="mt-2"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+    <div class="bg-dark-800 border border-dark-700 rounded-2xl w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden">
+      <div class="flex items-center justify-between p-4 border-b border-dark-700">
+        <span class="text-blue-400 font-semibold text-sm">Visualizacao do Modulo</span>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 transition-colors p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <iframe id="modal-iframe" class="flex-1 w-full" frameborder="0"></iframe>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Toggle topic
+    function toggleTopic(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('hidden');
+    }
+
+    // Modal
+    function openModal(src) {
+      document.getElementById('modal-iframe').src = src;
+      document.getElementById('modal-overlay').classList.remove('hidden');
+      document.getElementById('modal-overlay').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.add('hidden');
+      document.getElementById('modal-overlay').classList.remove('flex');
+      document.getElementById('modal-iframe').src = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+
+</body>
+</html>

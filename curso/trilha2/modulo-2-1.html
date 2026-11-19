@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 2.1 - MCP: Model Context Protocol | DEV2K6</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - Part 1: Base overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - Part 2: Blue accent */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - Emerald accent (for T1 nav link) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+
+    /* Light mode - Purple accent (for T3 nav link) */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Light mode - Part 3: Remove gradients + special colors */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - Part 4: Nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="../../index.html" class="text-yellow-400 font-bold text-lg hover:text-yellow-300 transition-colors">
+            <span class="text-xl">&#x1F4BB;</span> DEV2K6
+          </a>
+          <span class="text-neutral-500 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline transition-colors">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T1 Fundamentos</a>
+            <a href="index.html" class="text-blue-400 bg-blue-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T2 Agentic</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T3 Escala</a>
+          </div>
+
+          <div class="flex md:hidden items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T1</a>
+            <a href="index.html" class="text-blue-400 bg-blue-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T2</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T3</a>
+          </div>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" title="Alternar tema">
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="icon-moon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-24 pb-12 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-900"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <a href="index.html" class="inline-flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors mb-6">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Voltar para Trilha 2
+      </a>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/30">Modulo 2.1</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-neutral-100 mb-4">MCP: Model Context Protocol</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl leading-relaxed">O protocolo que conecta LLMs ao mundo real. Ferramentas, dados e servicos acessiveis de forma padronizada.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- Topic 1 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F50C; Fundamentos de MCP - Por que se tornou infraestrutura (1.864+ servidores registrados)</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">MCP (Model Context Protocol) e um protocolo aberto criado pela Anthropic que padroniza como LLMs se conectam a fontes de dados e ferramentas externas. Funciona como uma "porta USB-C" para IA: uma interface unica que conecta qualquer modelo a qualquer recurso.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Com 1.864+ servidores registrados e adocao por todas as grandes plataformas (Claude, Cursor, Windsurf, VS Code), MCP nao e mais experimental. E infraestrutura. Saber usar e construir servidores MCP e o que separa quem usa IA de quem constroi sistemas com IA.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Protocolo cliente-servidor, JSON-RPC 2.0, tools/resources/prompts como primitivas, host vs client vs server, ciclo de vida de conexao, capability negotiation.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 2 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F310; HTTP como transporte - Padrao em producao substituindo stdio</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">A evolucao do transporte MCP de stdio (standard input/output) para Streamable HTTP. Stdio funciona bem localmente, mas em producao voce precisa de HTTP para escalar, autenticar e monitorar conexoes entre clientes e servidores MCP.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Servidores MCP em producao precisam de autenticacao (OAuth 2.1), rate limiting, logging e deploy distribuido. Stdio nao suporta nada disso. HTTP com SSE (Server-Sent Events) se tornou o padrao para servidores remotos.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Streamable HTTP transport, Server-Sent Events (SSE), OAuth 2.1 para autenticacao, stdio vs HTTP trade-offs, session management, reconnection handling.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 3 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4CB; MCP Server Cards - .well-known/mcp para descoberta automatica</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">MCP Server Cards sao documentos JSON publicados em .well-known/mcp.json que descrevem as capacidades de um servidor MCP. Permitem que clientes descubram automaticamente quais ferramentas, recursos e prompts um servidor oferece, sem configuracao manual.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">A descoberta automatica elimina a configuracao manual de servidores. Em vez de listar endpoints e capacidades num arquivo de config, o cliente simplesmente consulta o .well-known/mcp.json e sabe o que esta disponivel. Isso habilita composicao dinamica de ferramentas.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Well-known URIs, server card schema, capability advertisement, tool discovery, dynamic registration, versioning de capacidades.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 4 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F517; Conectando LLMs - Ferramentas, arquivos, terminal, docs e servicos externos</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">A pratica de conectar LLMs a recursos do mundo real via MCP: sistemas de arquivos, terminais, bancos de dados, APIs, documentacao e servicos SaaS. Cada conexao e um servidor MCP que expoe tools (acoes), resources (dados) ou prompts (templates).</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">O poder de um LLM isolado e limitado. Quando voce conecta um modelo ao GitHub, ao banco de dados, ao Slack e ao sistema de arquivos via MCP, ele se torna um agente capaz de executar tarefas reais. A diferenca entre "chatbot" e "assistente de engenharia" esta nas conexoes.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Tool definitions com JSON Schema, resources como URIs enderecaveis, prompts como templates reutilizaveis, composicao de multiplos servidores, sandboxing e permissoes.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 5 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F3D7;&#xFE0F; Servidor MCP - Estrutura de um servidor e desenho de capacidades</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">A construcao de um servidor MCP do zero: definir quais ferramentas expor, como estruturar inputs/outputs, como validar requisicoes e como fazer o deploy. Um servidor MCP e basicamente um processo que fala JSON-RPC e expoe capacidades que um LLM pode invocar.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Usar servidores prontos e o basico. Construir os seus e o que transforma qualquer sistema legado, API interna ou workflow proprietario em algo que um LLM pode operar. Voce cria a ponte entre a IA e o seu dominio especifico.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">@modelcontextprotocol/sdk, handler patterns, input validation com Zod/JSON Schema, error handling, logging estruturado, testes de servidor, deploy com Docker.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 6 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x26A0;&#xFE0F; Riscos operacionais - Agentes com acesso a ferramentas reais, quando evitar</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Os riscos concretos de dar a um LLM acesso a ferramentas que afetam o mundo real: deletar arquivos, executar comandos, fazer deploy, enviar emails. Inclui prompt injection via tools, exfiltracao de dados, acao em loop destrutivo e falta de auditoria.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Um agente com acesso ao terminal pode rodar rm -rf se o prompt for manipulado. Um agente com acesso ao email pode enviar dados sensiveis. Entender os riscos antes de dar poder a um LLM e a diferenca entre engenharia e negligencia.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Principio do menor privilegio, tool poisoning, prompt injection indireta via resources, sandboxing de execucao, human-in-the-loop, audit logging, rate limiting, permissoes granulares.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exercicios -->
+      <div class="bg-dark-800 border border-blue-500/30 rounded-2xl p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-neutral-100 mb-6 flex items-center gap-3">
+          <span class="text-blue-400">&#x1F4DD;</span> Exercicios
+        </h2>
+        <div class="space-y-6">
+
+          <div class="border-l-2 border-blue-500/30 pl-5">
+            <h3 class="text-lg font-semibold text-neutral-100 mb-2">Projeto: MCP para banco de dados (3h)</h3>
+            <p class="text-neutral-400 text-sm leading-relaxed">Construir MCP server em Python (FastMCP) que conecta a SQLite. Tools: query_db, list_tables, describe_table, insert_record. Conectar ao Claude e fazer queries em linguagem natural. Meta: perguntar "quais usuarios se cadastraram essa semana?" e obter query SQL + resultado.</p>
+          </div>
+
+          <div class="border-l-2 border-blue-500/30 pl-5">
+            <h3 class="text-lg font-semibold text-neutral-100 mb-2">Projeto: MCP para API externa (2h)</h3>
+            <p class="text-neutral-400 text-sm leading-relaxed">Wrapar API REST publica (GitHub, OpenWeather, NewsAPI) como MCP server. Mapear endpoints como tools, adicionar rate limiting e cache simples. Discussao: por que documentar bem cada tool e critico pro modelo escolher certo?</p>
+          </div>
+
+          <div class="border-l-2 border-blue-500/30 pl-5">
+            <h3 class="text-lg font-semibold text-neutral-100 mb-2">Projeto: MCP com permissoes (2h)</h3>
+            <p class="text-neutral-400 text-sm leading-relaxed">MCP server de filesystem com controle de acesso: apenas leitura em /prod, escrita em /workspace. Implementar e testar. Aprender por que permission scoping e seguranca critica.</p>
+          </div>
+
+          <div class="border-l-2 border-blue-500/30 pl-5">
+            <h3 class="text-lg font-semibold text-neutral-100 mb-2">Lab: Compor 3 MCPs (90 min)</h3>
+            <p class="text-neutral-400 text-sm leading-relaxed">Conectar 3 MCP servers simultaneamente (filesystem + database + GitHub) ao Claude Code. Executar uma tarefa que exige os tres (ex: ler issue do GitHub, consultar dados no DB, gerar arquivo de relatorio). Observar como o modelo decide qual tool usar.</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="index.html" class="flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 px-4 py-3 rounded-xl transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="font-medium">Trilha 2</span>
+        </a>
+        <a href="modulo-2-2.html" class="flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 px-4 py-3 rounded-xl transition-colors">
+          <span class="font-medium">Modulo 2.2</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-dark-700 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>DEV2K6 - Engenharia de Software com IA Avancada - 2026</p>
+      <p class="mt-2"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

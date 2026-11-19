@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEV2K6 - Engenharia de Software com IA Avancada | INEMA.CLUB</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - ALL trail accent colors */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-blue-400 { color: #2563eb; }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    /* Light mode - remove gradients + special colors */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="index.html" class="text-yellow-400 font-bold text-lg hover:text-yellow-300 transition-colors">
+            <span class="text-xl">&#x1F4BB;</span> DEV2K6
+          </a>
+          <span class="text-neutral-500 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline transition-colors">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex items-center gap-1">
+            <a href="curso/trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T1 Fundamentos</a>
+            <a href="curso/trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T2 Agentic</a>
+            <a href="curso/trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T3 Escala</a>
+          </div>
+
+          <div class="flex md:hidden items-center gap-1">
+            <a href="curso/trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T1</a>
+            <a href="curso/trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T2</a>
+            <a href="curso/trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T3</a>
+          </div>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" title="Alternar tema">
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="icon-moon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="pt-24 pb-16 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-dark-900 via-dark-800 to-dark-900"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-transparent to-purple-500/5"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="mb-8">
+        <span class="text-6xl sm:text-7xl">&#x1F4BB;</span>
+      </div>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-neutral-100 mb-6">
+        <span class="text-yellow-400">DEV2K6</span>
+      </h1>
+      <p class="text-xl sm:text-2xl text-neutral-300 max-w-3xl mx-auto mb-4 leading-relaxed font-semibold">
+        Engenharia de Software com IA Avancada
+      </p>
+      <p class="text-lg text-neutral-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+        Formacao completa para devs que querem dominar IA como ferramenta de engenharia, nao como muleta
+      </p>
+
+      <!-- Stats -->
+      <div class="flex flex-wrap justify-center gap-4 sm:gap-8 mb-12">
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-primary">3</span>
+          <span class="text-neutral-400 text-sm ml-2">Trilhas</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-primary">15</span>
+          <span class="text-neutral-400 text-sm ml-2">Modulos</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-primary">~90</span>
+          <span class="text-neutral-400 text-sm ml-2">Topicos</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-primary">Avancado</span>
+          <span class="text-neutral-400 text-sm ml-2">Nivel</span>
+        </div>
+      </div>
+
+      <p class="text-neutral-400 max-w-2xl mx-auto text-base leading-relaxed">
+        De <span class="text-emerald-400 font-semibold">fundamentos e contexto</span> a
+        <span class="text-blue-400 font-semibold">desenvolvimento agentic</span> e
+        <span class="text-purple-400 font-semibold">adocao em escala</span>:
+        domine o uso profissional de IA em engenharia de software
+      </p>
+    </div>
+  </section>
+
+  <!-- Trail Cards -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-neutral-100 text-center mb-12">Trilhas do Curso</h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- T1 Fundamentos e Engenharia de Contexto -->
+        <a href="curso/trilha1/index.html" class="group block bg-dark-800 border border-dark-700 rounded-2xl p-6 hover:border-emerald-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/5">
+          <div class="flex items-start justify-start gap-3 mb-4">
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full">T1</span>
+            <h3 class="text-lg font-bold text-neutral-100 group-hover:text-emerald-400 transition-colors">
+              &#x1F9E0; Fundamentos e Contexto
+            </h3>
+          </div>
+          <p class="text-neutral-400 text-sm leading-relaxed mb-4">
+            De "usar IA pra codar" ate dominar a disciplina que separa amadores de engenheiros. LLMs, prompting, context engineering, ferramentas e vibe coding com rigor.
+          </p>
+          <div class="flex items-center justify-start gap-4 text-xs text-neutral-500">
+            <span class="bg-emerald-500/10 text-emerald-400 px-2 py-1 rounded">5 modulos</span>
+            <span>~30 topicos</span>
+          </div>
+        </a>
+
+        <!-- T2 Desenvolvimento Agentic e Arquitetura com IA -->
+        <a href="curso/trilha2/index.html" class="group block bg-dark-800 border border-dark-700 rounded-2xl p-6 hover:border-blue-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/5">
+          <div class="flex items-start justify-start gap-3 mb-4">
+            <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-3 py-1 rounded-full">T2</span>
+            <h3 class="text-lg font-bold text-neutral-100 group-hover:text-blue-400 transition-colors">
+              &#x1F916; Agentic e Arquitetura
+            </h3>
+          </div>
+          <p class="text-neutral-400 text-sm leading-relaxed mb-4">
+            Agentes, MCP, RAG e Spec-Driven Development. O kit completo pra construir software com IA de forma estruturada e profissional.
+          </p>
+          <div class="flex items-center justify-start gap-4 text-xs text-neutral-500">
+            <span class="bg-blue-500/10 text-blue-400 px-2 py-1 rounded">5 modulos</span>
+            <span>~30 topicos</span>
+          </div>
+        </a>
+
+        <!-- T3 Qualidade, Seguranca e Adocao em Escala -->
+        <a href="curso/trilha3/index.html" class="group block bg-dark-800 border border-dark-700 rounded-2xl p-6 hover:border-purple-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/5">
+          <div class="flex items-start justify-start gap-3 mb-4">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-3 py-1 rounded-full">T3</span>
+            <h3 class="text-lg font-bold text-neutral-100 group-hover:text-purple-400 transition-colors">
+              &#x1F3E2; Qualidade e Escala
+            </h3>
+          </div>
+          <p class="text-neutral-400 text-sm leading-relaxed mb-4">
+            De codigo individual pra padrao de time. Qualidade, governanca, seguranca, metricas e projeto integrador aplicando tudo.
+          </p>
+          <div class="flex items-center justify-start gap-4 text-xs text-neutral-500">
+            <span class="bg-purple-500/10 text-purple-400 px-2 py-1 rounded">5 modulos</span>
+            <span>~30 topicos</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Who is this for -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-neutral-100 text-center mb-12">Para Quem e Este Curso</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6 text-center">
+          <span class="text-3xl mb-3 block">&#x1F468;&#x200D;&#x1F4BB;</span>
+          <h3 class="font-bold text-lg mb-2 text-emerald-400">Dev que quer usar IA direito</h3>
+          <p class="text-neutral-400 text-sm">Dominar fundamentos, prompting e context engineering para parar de depender de tentativa e erro.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6 text-center">
+          <span class="text-3xl mb-3 block">&#x1F3D7;&#xFE0F;</span>
+          <h3 class="font-bold text-lg mb-2 text-blue-400">Dev que quer arquitetar com IA</h3>
+          <p class="text-neutral-400 text-sm">Construir com MCP, agentes, RAG e Spec-Driven Development de forma estruturada e profissional.</p>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6 text-center">
+          <span class="text-3xl mb-3 block">&#x1F4CA;</span>
+          <h3 class="font-bold text-lg mb-2 text-purple-400">Tech Lead / Eng Manager</h3>
+          <p class="text-neutral-400 text-sm">Criar padrao de time, medir impacto, garantir qualidade e seguranca na adocao de IA em escala.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Numbers -->
+  <section class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-neutral-100 text-center mb-12">IA em Engenharia de Software - Marco 2026</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 text-center">
+          <span class="text-2xl font-bold text-primary block">92%</span>
+          <span class="text-neutral-400 text-xs">dos devs usam IA</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 text-center">
+          <span class="text-2xl font-bold text-primary block">41%</span>
+          <span class="text-neutral-400 text-xs">do codigo e gerado por IA</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 text-center">
+          <span class="text-2xl font-bold text-primary block">1.864+</span>
+          <span class="text-neutral-400 text-xs">servidores MCP</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-5 text-center">
+          <span class="text-2xl font-bold text-primary block">+60%</span>
+          <span class="text-neutral-400 text-xs">mais PRs mergeados</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-dark-700 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>DEV2K6 - Engenharia de Software com IA Avancada - 2026</p>
+      <p class="mt-2"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

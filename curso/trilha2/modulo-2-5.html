@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 2.5 - Refatoracao, legado e evolucao arquitetural com IA | DEV2K6</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="../../index.html" class="text-yellow-400 font-bold text-lg hover:text-yellow-300 transition-colors">
+            <span class="text-xl">&#x1F4BB;</span> DEV2K6
+          </a>
+          <span class="text-neutral-500 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline transition-colors">INEMA.CLUB</a>
+        </div>
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T1 Fundamentos</a>
+            <a href="index.html" class="text-blue-400 bg-blue-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T2 Agentic</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T3 Escala</a>
+          </div>
+          <div class="flex md:hidden items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T1</a>
+            <a href="index.html" class="text-blue-400 bg-blue-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T2</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T3</a>
+          </div>
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" title="Alternar tema">
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="icon-moon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-24 pb-12 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900/30 via-dark-800 to-dark-900"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <a href="index.html" class="inline-flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors mb-6">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Voltar para Trilha 2
+      </a>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="bg-blue-500/20 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/30">Modulo 2.5</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-neutral-100 mb-4">Refatoracao, legado e evolucao arquitetural com IA</h1>
+      <p class="text-lg text-neutral-400 max-w-3xl leading-relaxed">IA aplicada a sistemas existentes. Leitura assistida, mapeamento de dependencias, refatoracao em massa e arquitetura.</p>
+    </div>
+  </section>
+
+  <!-- Content -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- Topic 1 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4D6; Leitura assistida - Bases grandes e sistemas complexos com apoio de IA</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Usar IA para entender codebases grandes e sistemas complexos que levam semanas para um dev novo compreender. A IA navega pelo codigo, explica padroes, identifica fluxos de dados e mapeia relacoes entre componentes, funcionando como um "guia interativo" da codebase.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Onboarding em codebases grandes leva 3-6 meses. Com leitura assistida por IA, esse tempo cai para dias. Alem disso, devs seniors que ja conhecem o sistema usam leitura assistida para explorar partes do codigo que nunca tocaram, entendendo impactos antes de mudar.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Code navigation com IA, call graph exploration, "explain this function in context", dependency chain walking, architectural overview generation, pattern recognition em codebases.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 2 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F5FA;&#xFE0F; Mapeamento de dependencias - Hotspots, acoplamento e divida tecnica</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Usar IA para mapear dependencias entre modulos, identificar hotspots (codigo que muda muito e causa muitos bugs), medir acoplamento entre componentes e quantificar divida tecnica. A IA combina analise estatica do codigo com historico do git para produzir um mapa completo.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Voce nao pode refatorar o que nao entende. Antes de mexer em codigo legado, precisa saber quais modulos sao acoplados, quais sao hotspots de bugs e onde a divida tecnica e mais cara. Sem esse mapa, refatoracao e um tiro no escuro que frequentemente piora a situacao.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Dependency graph generation, churn analysis (git log), complexity metrics (cyclomatic, cognitive), coupling score, hotspot detection, tech debt quantification, risk scoring.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 3 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F504; Refatoracao em massa - Seguranca e consistencia em mudancas amplas</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Usar IA para aplicar refatoracoes consistentes em centenas de arquivos simultaneamente. Renomear APIs, migrar padroes, atualizar imports, converter tipos. A IA entende o contexto semantico de cada mudanca, nao apenas faz find-and-replace.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Refatoracoes grandes feitas manualmente levam semanas e introduzem inconsistencias. Com IA, uma migracao de API que tocaria 200 arquivos pode ser feita em horas, com cada transformacao respeitando o contexto local do arquivo. A IA ajusta o padrao conforme o uso.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Semantic codemods, batch transformation com review, consistency verification, rollback safety, test-first refactoring, incremental migration, feature flags em refatoracao.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 4 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F3D7;&#xFE0F; Modularizacao com IA - Reorganizacao de responsabilidades e coesao</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Usar IA para identificar responsabilidades misturadas em modulos e propor reorganizacoes que aumentam a coesao e reduzem o acoplamento. A IA analisa quais funcoes/classes sao usadas juntas, quais pertencem a dominios diferentes e sugere uma nova estrutura modular.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Codigo legado tende a acumular responsabilidades em "god modules" que fazem de tudo. Separar manualmente e arriscado porque voce nao enxerga todas as dependencias. A IA varre o grafo de dependencias inteiro e propoe cortes que minimizam breaking changes.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Cohesion analysis, responsibility extraction, module boundary detection, interface design, dependency inversion, strangler fig pattern, incremental extraction.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 5 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F355; Feature slice vs vertical slice - Estrategias de particao de codigo</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Duas estrategias de organizar codigo: feature slice agrupa por funcionalidade (tudo de "pagamentos" junto), vertical slice agrupa por camada tecnica (todos os controllers juntos, todos os services juntos). Cada abordagem tem implicacoes diferentes pra IA e pra manutenibilidade.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">A organizacao do codigo afeta diretamente a qualidade do contexto que a IA recebe. Feature slices dao contexto completo de uma funcionalidade num unico diretorio. Vertical slices forcam a IA a navegar entre camadas. A escolha impacta a eficacia de agentes e a velocidade de desenvolvimento.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Feature-based architecture, vertical slice architecture, bounded contexts, context locality para IA, colocation de arquivos, shared kernel, trade-offs de cada abordagem.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 6 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-6">
+          <span class="w-10 h-10 rounded-full bg-blue-500/20 text-blue-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F3DB;&#xFE0F; Arquiteturas com IA - DDD, Hexagonal, Clean e repositorio IA-first</h2>
+        </div>
+        <div class="space-y-4 ml-13">
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Como padroes arquiteturais classicos (DDD, Hexagonal, Clean Architecture) se adaptam a era da IA. Repositorios IA-first sao organizados com CLAUDE.md/AGENTS.md na raiz, specs em /docs, context files por feature e convencoes explicitas que agentes entendem.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Arquiteturas que funcionavam bem para devs humanos podem ser hostis para agentes. Clean Architecture com sua separacao estrita e otima para humanos mas multiplica o contexto necessario para um agente. Repositorios IA-first balanceiam separacao com localidade de contexto.</p>
+          </div>
+          <div>
+            <span class="text-blue-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">DDD aggregate roots como context boundaries, Hexagonal ports/adapters para tool integration, IA-first repo structure, CLAUDE.md como system prompt, AGENTS.md para convencoes, context files (.cursorrules, .github/copilot), documentation-as-context.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Exercicios -->
+      <div class="bg-dark-800 border border-blue-500/30 rounded-2xl p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-neutral-100 mb-6 flex items-center gap-3">
+          <span class="text-blue-400">&#x1F4DD;</span> Exercicios
+        </h2>
+        <div class="space-y-6">
+
+          <div class="border-l-2 border-blue-500/30 pl-5">
+            <h3 class="text-lg font-semibold text-neutral-100 mb-2">Projeto: Strangler Fig com IA (4h)</h3>
+            <p class="text-neutral-400 text-sm leading-relaxed">Modulo legado monolitico: (1) AI mapeia dependencias e identifica fronteiras, (2) gerar golden tests que capturam comportamento atual sem alterar nada, (3) refatorar incrementalmente validando contra golden tests, (4) cada passo = commit testavel. Se teste quebrar, rollback.</p>
+          </div>
+
+          <div class="border-l-2 border-blue-500/30 pl-5">
+            <h3 class="text-lg font-semibold text-neutral-100 mb-2">Exercicio: Modernizacao de stack (3h)</h3>
+            <p class="text-neutral-400 text-sm leading-relaxed">Codigo em versao antiga (jQuery > React, Python 2 > 3, Express 3 > 5): (1) AI analisa e gera plano de migracao com riscos mapeados, (2) humano valida e prioriza, (3) migrar uma funcionalidade por vez, (4) testar cada etapa antes de seguir.</p>
+          </div>
+
+          <div class="border-l-2 border-blue-500/30 pl-5">
+            <h3 class="text-lg font-semibold text-neutral-100 mb-2">Exercicio: Debt Discovery (45 min)</h3>
+            <p class="text-neutral-400 text-sm leading-relaxed">AI audita codebase e gera relatorio de divida tecnica: duplicacao de logica, funcoes com responsabilidades multiplas, dependencias circulares, codigo morto. Comparar com ferramentas tradicionais (CodeScene, SonarQube). Discutir falsos positivos.</p>
+          </div>
+
+          <div class="border-l-2 border-blue-500/30 pl-5">
+            <h3 class="text-lg font-semibold text-neutral-100 mb-2">Lab: Mapeamento de codebase desconhecido (60 min)</h3>
+            <p class="text-neutral-400 text-sm leading-relaxed">Repo de 50+ arquivos que o aluno nunca viu. Usar AI para mapear arquitetura em 30 min: diagrama Mermaid, modulos principais, entrypoints, pontos de risco. Depois comparar com explorar manualmente. Quanto tempo economizou? Acertou a arquitetura?</p>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="modulo-2-4.html" class="flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 px-4 py-3 rounded-xl transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="font-medium">Modulo 2.4</span>
+        </a>
+        <a href="index.html" class="flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 px-4 py-3 rounded-xl transition-colors">
+          <span class="font-medium">Trilha 2</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-dark-700 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>DEV2K6 - Engenharia de Software com IA Avancada - 2026</p>
+      <p class="mt-2"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 1.4 - Ferramentas e fluxo de trabalho | DEV2K6</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="../../index.html" class="text-yellow-400 font-bold text-lg hover:text-yellow-300 transition-colors">
+            <span class="text-xl">&#x1F4BB;</span> DEV2K6
+          </a>
+          <span class="text-neutral-500 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline transition-colors">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex items-center gap-1">
+            <a href="index.html" class="text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T1 Fundamentos</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T2 Agentic</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T3 Escala</a>
+          </div>
+
+          <div class="flex md:hidden items-center gap-1">
+            <a href="index.html" class="text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T1</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T2</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T3</a>
+          </div>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" title="Alternar tema">
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="icon-moon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-24 pb-12 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-900"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-start gap-2 mb-4">
+        <a href="../../index.html" class="text-neutral-400 hover:text-neutral-300 text-sm transition-colors">Inicio</a>
+        <span class="text-neutral-500 text-sm">/</span>
+        <a href="index.html" class="text-neutral-400 hover:text-neutral-300 text-sm transition-colors">Trilha 1</a>
+        <span class="text-neutral-500 text-sm">/</span>
+        <span class="text-emerald-400 text-sm font-medium">Modulo 1.4</span>
+      </div>
+
+      <div class="flex items-center justify-start gap-3 mb-4">
+        <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full">MODULO 1.4</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-neutral-100 mb-4">
+        Ferramentas e fluxo de trabalho do dev com IA
+      </h1>
+      <p class="text-lg text-neutral-300 max-w-3xl leading-relaxed">
+        Panorama completo de ferramentas 2026 e como integrar IA no fluxo de desenvolvimento real.
+      </p>
+    </div>
+  </section>
+
+  <!-- Topics -->
+  <section class="py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+      <!-- Topic 1 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F5FA;&#xFE0F; Panorama 2026</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">O ecossistema de ferramentas de dev com IA em 2026: Claude Code, Cursor, GitHub Copilot, Windsurf, Codex e Devin. O que cada uma faz e onde se destaca.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Usar a ferramenta certa pra cada tarefa e a diferenca entre produtividade e desperdicio. O mercado mudou drasticamente em 2025-2026.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">IDE-integrated tools, CLI tools, cloud agents, autonomous coding, feature comparison, pricing models.</span></div>
+        </div>
+      </div>
+
+      <!-- Topic 2 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F916; Claude Code</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">A CLI da Anthropic: subagentes paralelos, model overrides, plan mode e 1M tokens de contexto. A ferramenta mais poderosa pra engenharia IA-first.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Claude Code e a referencia de capacidade em 2026. Entender suas features e limites define o teto do que voce consegue fazer com IA.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Subagentes, model overrides, plan mode, extended thinking, CLAUDE.md, skills, 1M context, session management.</span></div>
+        </div>
+      </div>
+
+      <!-- Topic 3 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F5A5;&#xFE0F; Cursor e Copilot</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Cursor com Composer mode e Background Agents. GitHub Copilot com Coding Agent que transforma Issues em PRs automaticos.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Sao as ferramentas mais usadas no mercado. Conhecer suas capacidades e limites e obrigacao de qualquer dev que trabalha com IA.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Composer mode, Background Agents, Coding Agent, agent mode, multi-file editing, codebase indexing.</span></div>
+        </div>
+      </div>
+
+      <!-- Topic 4 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4E6; Codex e Devin</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">OpenAI Codex com GPT-5.x, Codex Skills e Interactive Planning. Devin com agentes autonomos e Devin Wiki pra documentacao automatica.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Representam o futuro da automacao de codigo. Entender o que ja funciona e o que ainda e hype ajuda a tomar decisoes informadas.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Codex Skills, Interactive Planning, sandbox execution, Devin Wiki, autonomous agents, task delegation.</span></div>
+        </div>
+      </div>
+
+      <!-- Topic 5 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F527; Fluxos praticos</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Fluxos concretos para implementacao guiada, debugging, escrita de testes, revisao de PR e documentacao usando ferramentas de IA.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Saber os fluxos otimizados evita reinventar a roda. Patterns validados economizam tempo e produzem resultados melhores.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Implementation workflow, debug workflow, test-first workflow, PR review workflow, documentation workflow.</span></div>
+        </div>
+      </div>
+
+      <!-- Topic 6 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x2699;&#xFE0F; Automacao de tarefas</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Automacao de tarefas recorrentes no ciclo de desenvolvimento: CI/CD triggers, scheduled reviews, changelog generation, dependency updates.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Tarefas repetitivas consomem horas por semana. Automatizar com IA libera tempo pra trabalho que realmente requer pensamento humano.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Task automation, scheduled agents, CI/CD integration, recurring workflows, cost optimization, automation ROI.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Exercicios -->
+  <section class="py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-100 mb-6 flex items-center gap-3">
+        <span class="bg-emerald-500/20 text-emerald-400 w-10 h-10 rounded-full flex items-center justify-center text-lg">&#x1F4DD;</span>
+        Exercicios
+      </h2>
+
+      <div class="space-y-4">
+
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6">
+          <div class="flex items-start gap-3">
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5">LAB</span>
+            <div>
+              <h3 class="text-neutral-100 font-semibold mb-1">Setup completo de ambiente <span class="text-neutral-500 font-normal">(90 min)</span></h3>
+              <p class="text-neutral-300 text-sm leading-relaxed">Configurar Claude Code + CLAUDE.md para um projeto real. Criar regras, testar com 5 tarefas de complexidade crescente, documentar produtividade vs. fazer manual.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6">
+          <div class="flex items-start gap-3">
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5">LAB</span>
+            <div>
+              <h3 class="text-neutral-100 font-semibold mb-1">Workflow de PR com IA <span class="text-neutral-500 font-normal">(60 min)</span></h3>
+              <p class="text-neutral-300 text-sm leading-relaxed">Fluxo completo end-to-end: (1) receber issue, (2) AI planeja abordagem, (3) implementar com AI, (4) gerar testes, (5) abrir PR com descricao gerada, (6) self-review assistido. Documentar cada passo com prints.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6">
+          <div class="flex items-start gap-3">
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5">EX</span>
+            <div>
+              <h3 class="text-neutral-100 font-semibold mb-1">Ferramenta certa para cada tarefa <span class="text-neutral-500 font-normal">(45 min)</span></h3>
+              <p class="text-neutral-300 text-sm leading-relaxed">10 tarefas reais (bug fix, refactor, new feature, migration, doc, test, review, debug, deploy config, API design). Escolher qual ferramenta usar para cada e justificar com trade-offs.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6">
+          <div class="flex items-start gap-3">
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5">LAB</span>
+            <div>
+              <h3 class="text-neutral-100 font-semibold mb-1">Agentmaxxing <span class="text-neutral-500 font-normal">(120 min)</span></h3>
+              <p class="text-neutral-300 text-sm leading-relaxed">3 tarefas independentes rodando em paralelo com Claude Code, cada uma em branch separada. Medir throughput total vs. sequencial. Discutir: quando paralelizar funciona e quando cria conflitos de merge.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6">
+          <div class="flex items-start gap-3">
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5">EX</span>
+            <div>
+              <h3 class="text-neutral-100 font-semibold mb-1">Custo vs. valor <span class="text-neutral-500 font-normal">(30 min)</span></h3>
+              <p class="text-neutral-300 text-sm leading-relaxed">Monitorar uso real de tokens em uma sessao de desenvolvimento de 2h. Calcular custo e comparar com o valor do tempo economizado. A ferramenta se paga?</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="modulo-1-3.html" class="flex items-center justify-start gap-2 text-neutral-400 hover:text-emerald-400 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm font-medium">Anterior: 1.3 Context Engineering</span>
+        </a>
+        <a href="modulo-1-5.html" class="flex items-center justify-start gap-2 text-emerald-400 hover:text-emerald-300 transition-colors">
+          <span class="text-sm font-medium">Proximo: 1.5 Vibe Coding</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-dark-700 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>DEV2K6 - Engenharia de Software com IA Avancada - 2026</p>
+      <p class="mt-2"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

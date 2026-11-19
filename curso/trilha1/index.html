@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 1 - Fundamentos e Engenharia de Contexto | DEV2K6</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Part 1 - Base overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Part 2 - Emerald accent */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-emerald-400 { color: #059669; }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    /* Part 3 - Remove gradients + special colors */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Part 4 - Nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="../../index.html" class="text-yellow-400 font-bold text-lg hover:text-yellow-300 transition-colors">
+            <span class="text-xl">&#x1F4BB;</span> DEV2K6
+          </a>
+          <span class="text-neutral-500 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline transition-colors">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex items-center gap-1">
+            <a href="index.html" class="text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T1 Fundamentos</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T2 Agentic</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T3 Escala</a>
+          </div>
+
+          <div class="flex md:hidden items-center gap-1">
+            <a href="index.html" class="text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T1</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T2</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T3</a>
+          </div>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" title="Alternar tema">
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="icon-moon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-24 pb-16 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-900"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-start gap-2 mb-4">
+        <a href="../../index.html" class="text-neutral-400 hover:text-neutral-300 text-sm transition-colors">Inicio</a>
+        <span class="text-neutral-500 text-sm">/</span>
+        <span class="text-emerald-400 text-sm font-medium">Trilha 1</span>
+      </div>
+
+      <div class="flex items-center justify-start gap-3 mb-4">
+        <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full">TRILHA 1</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-neutral-100 mb-4">
+        Fundamentos e Engenharia de Contexto
+      </h1>
+      <p class="text-lg text-neutral-300 max-w-3xl mb-8 leading-relaxed">
+        De "usar IA pra codar" ate dominar a disciplina que separa amadores de engenheiros
+      </p>
+
+      <!-- Stats -->
+      <div class="flex flex-wrap justify-start gap-4 sm:gap-6">
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-emerald-400">5</span>
+          <span class="text-neutral-400 text-sm ml-2">Modulos</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-emerald-400">~30</span>
+          <span class="text-neutral-400 text-sm ml-2">Topicos</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-emerald-400">~2.5h</span>
+          <span class="text-neutral-400 text-sm ml-2">Duracao</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-emerald-400">Avancado</span>
+          <span class="text-neutral-400 text-sm ml-2">Nivel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module Cards -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- Module 1.1 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-3 mb-2">
+          <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full flex-shrink-0">1.1</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Fundamentos tecnicos de LLMs para engenharia de software</h2>
+        </div>
+        <p class="text-neutral-400 text-sm mb-6 ml-12">Como LLMs funcionam por baixo do capo e por que isso importa pra quem escreve codigo com IA.</p>
+
+        <div class="space-y-3 mb-6">
+          <!-- Topic 1 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m11-t1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F504; IA no fluxo de engenharia</span>
+            </button>
+            <div id="m11-t1" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Quando IA deixa de ser apoio e passa a compor o fluxo de engenharia como parte estrutural do processo de desenvolvimento.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Entender onde a IA se encaixa no ciclo de dev evita sub-uso e dependencia cega. A diferenca entre um dev que usa IA como Google glorificado e um que integra IA no fluxo e produtividade e qualidade.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Fluxo de engenharia, IA como co-piloto vs IA como componente, inner loop vs outer loop de desenvolvimento, automacao de tarefas de rotina.</span></div>
+            </div>
+          </div>
+
+          <!-- Topic 2 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m11-t2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F9EC; Tipos de IA</span>
+            </button>
+            <div id="m11-t2" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Diferenca entre IA generativa, ML classico e sistemas assistidos por LLM. Saber o que cada tipo faz e onde cada um funciona melhor.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Muita gente confunde categorias de IA e tenta resolver problemas de ML classico com LLMs ou vice-versa. Clareza aqui evita meses de trabalho desperdicado.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">IA generativa, machine learning supervisionado/nao-supervisionado, LLMs, transformers, modelos de linguagem vs modelos de classificacao.</span></div>
+            </div>
+          </div>
+
+          <!-- Topic 3 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m11-t3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x2699;&#xFE0F; Anatomia dos modelos</span>
+            </button>
+            <div id="m11-t3" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Tokens, embeddings, attention, context window, inferencia e temperatura. Os mecanismos internos que determinam o que um LLM consegue e nao consegue fazer.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Sem entender como funciona por dentro, voce nao consegue diagnosticar por que um prompt falha, por que uma resposta alucina, ou por que o modelo "esquece" algo no meio da conversa.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Tokenizacao, embeddings, self-attention, context window, KV cache, temperatura, top-p, top-k, inferencia, next-token prediction.</span></div>
+            </div>
+          </div>
+
+          <!-- Topic 4 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m11-t4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x2696;&#xFE0F; Trade-offs criticos</span>
+            </button>
+            <div id="m11-t4" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">As decisoes que voce precisa tomar entre qualidade, custo, latencia, previsibilidade e seguranca ao usar LLMs em producao.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Na pratica, nenhum modelo e perfeito em tudo. Saber o que priorizar em cada cenario e o que separa uso amador de uso profissional.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Custo por token, latencia de inferencia, qualidade de output, previsibilidade, seguranca de dados, modelo caro vs modelo barato por tarefa.</span></div>
+            </div>
+          </div>
+
+          <!-- Topic 5 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m11-t5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F3AF; Escolha de modelos</span>
+            </button>
+            <div id="m11-t5" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Quando usar API direta, copilotos integrados ao editor ou agentes autonomos. Cada modalidade tem vantagens e custos diferentes.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">A ferramenta errada pro problema certo desperdiça dinheiro e tempo. Saber quando um copiloto basta e quando voce precisa de um agente e decisao critica.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">API vs copiloto vs agente, latencia interativa, custo por sessao, autonomia do modelo, feedback loop humano-IA.</span></div>
+            </div>
+          </div>
+
+          <!-- Topic 6 -->
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m11-t6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x1F3F7;&#xFE0F; Panorama 2026</span>
+            </button>
+            <div id="m11-t6" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Os modelos que importam em 2026: Claude Opus/Sonnet/Haiku, GPT-5.x, Gemini e modelos open-source. O que cada um faz de melhor.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">O cenario muda rapido. Saber o que esta disponivel, qual o custo e onde cada modelo se destaca evita escolhas desatualizadas.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Claude Opus 4, Sonnet 4, Haiku 3.5, GPT-5.x, Gemini 2.5 Pro, Llama 4, DeepSeek R1, benchmarks, pricing tiers, modelo por caso de uso.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-start gap-3">
+          <button onclick="openModal('modulo-1-1.html')" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Ver em Modal</button>
+          <a href="modulo-1-1.html" class="text-neutral-400 hover:text-emerald-400 border border-dark-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Ver Completo</a>
+        </div>
+      </div>
+
+      <!-- Module 1.2 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-3 mb-2">
+          <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full flex-shrink-0">1.2</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Prompt Engineering profissional</h2>
+        </div>
+        <p class="text-neutral-400 text-sm mb-6 ml-12">Estruturacao, tecnicas e validacao de prompts para tarefas reais de engenharia de software.</p>
+
+        <div class="space-y-3 mb-6">
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m12-t1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F3D7;&#xFE0F; Estruturacao de prompts</span>
+            </button>
+            <div id="m12-t1" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Montar prompts com papel, objetivo, restricoes, contexto e criterios de saida. A arquitetura que faz prompts funcionarem de forma previsivel.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Prompt sem estrutura gera resultados inconsistentes. Com estrutura, voce transforma tentativa-e-erro em processo reproduzivel.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Role assignment, task framing, constraints, context injection, output format specification, sistema ROCCE.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m12-t2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F6E1;&#xFE0F; Reducao de alucinacao</span>
+            </button>
+            <div id="m12-t2" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Tecnicas para reduzir ambiguidade e alucinacao nos outputs do modelo. Ancorar o modelo em fatos e contexto concreto.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Alucinacao e o risco numero 1 de usar LLMs em producao. Saber minimizar isso e habilidade obrigatoria.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Grounding, source attribution, confidence calibration, constraining output space, verificacao cruzada.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m12-t3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F4BB; Prompting para engenharia</span>
+            </button>
+            <div id="m12-t3" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Prompts orientados a tarefas de engenharia: leitura de codigo, refatoracao, documentacao, testes e investigacao de bugs.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Prompts genericos produzem codigo generico. Prompts orientados a engenharia produzem outputs que se encaixam no fluxo real de trabalho.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Code review prompts, debug prompts, refactoring prompts, test generation prompts, documentation prompts.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m12-t4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x2705; Validacao de respostas</span>
+            </button>
+            <div id="m12-t4" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Estrategias para validar o que a IA retorna antes de usar em producao. Da verificacao manual a automacao.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Aceitar output de IA sem validacao e o caminho mais rapido pra bugs em producao. Validacao e a rede de seguranca.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Self-verification, automated testing, human-in-the-loop, output assertions, smoke tests, diff review.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m12-t5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F6A7; Limites do prompting</span>
+            </button>
+            <div id="m12-t5" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Quando prompt engineering resolve e quando nao e suficiente. Os limites reais da tecnica e quando escalar pra context engineering ou agentes.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Ficar preso em prompt engineering quando o problema e de contexto ou de tooling desperdiça horas e gera frustacao.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Limites de instrucoes, context overflow, prompt vs context engineering, quando usar agentes, escalabilidade de prompts.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m12-t6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x1F517; Tecnicas avancadas</span>
+            </button>
+            <div id="m12-t6" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Chain-of-thought, few-shot e prompting com exemplos negativos. Tecnicas que melhoram significativamente a qualidade do output.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Essas tecnicas sao a diferenca entre um prompt que funciona 60% das vezes e um que funciona 95%. Dominar elas e profissionalismo.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Chain-of-thought (CoT), few-shot learning, zero-shot, exemplos negativos, step-by-step reasoning, self-consistency.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-start gap-3">
+          <button onclick="openModal('modulo-1-2.html')" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Ver em Modal</button>
+          <a href="modulo-1-2.html" class="text-neutral-400 hover:text-emerald-400 border border-dark-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Ver Completo</a>
+        </div>
+      </div>
+
+      <!-- Module 1.3 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-3 mb-2">
+          <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full flex-shrink-0">1.3</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Context Engineering</h2>
+        </div>
+        <p class="text-neutral-400 text-sm mb-6 ml-12">A disciplina que separa quem usa IA de quem domina IA. Estruturacao, memoria e particionamento de contexto.</p>
+
+        <div class="space-y-3 mb-6">
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m13-t1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F9E0; Context Engineering como disciplina</span>
+            </button>
+            <div id="m13-t1" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Context engineering nao e so "dar contexto pro modelo". E a disciplina de projetar, estruturar e manter o contexto que o modelo recebe de forma sistematica.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">E a habilidade mais importante para uso profissional de IA. Prompt engineering sem context engineering e como escrever SQL sem entender o schema.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Context design, context budget, context lifecycle, structured vs unstructured context, context engineering vs prompt engineering.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m13-t2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F4C4; CLAUDE.md e rules files</span>
+            </button>
+            <div id="m13-t2" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Arquivos de configuracao que definem como o modelo se comporta num projeto. CLAUDE.md, .cursorrules, e rules files com estrutura e boas praticas.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">LLMs seguem ~150-200 instrucoes com fidelidade. Alem disso, compliance degrada. Saber estruturar esses arquivos e a base de qualquer projeto IA-assisted.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">CLAUDE.md, .cursorrules, instruction hierarchy, compliance threshold, rules prioritization, project-level context.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m13-t3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F5C2;&#xFE0F; Separacao de contexto</span>
+            </button>
+            <div id="m13-t3" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Separar instrucao, contexto, memoria operacional e artefatos. Cada tipo de informacao tem papel diferente e deve ser tratado de forma distinta.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Misturar tudo num unico bloco de contexto desperdiça tokens e confunde o modelo. Separacao limpa melhora precisao e custo.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Instruction context, reference context, working memory, artifacts, context layering, information architecture.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m13-t4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x26A1; Skills e lazy-loading</span>
+            </button>
+            <div id="m13-t4" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Contexto ativado por demanda usando skills directories. Em vez de carregar tudo no inicio, o contexto relevante e injetado quando necessario.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Com contexto limitado, carregar tudo de uma vez e desperdiçar budget. Lazy-loading maximiza o uso do context window.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Skills directories, lazy context loading, on-demand injection, context budget management, trigger-based activation.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m13-t5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F3E2; Repositorios grandes</span>
+            </button>
+            <div id="m13-t5" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Estrategias para bases legadas e sistemas complexos. Como dar contexto suficiente ao modelo sem ultrapassar o limite do context window.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">A maioria dos projetos reais nao cabe num context window. Saber lidar com isso e o que permite usar IA em projetos que importam.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Codebase indexing, selective context, architectural summaries, file-level context, dependency graphs, context prioritization.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m13-t6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x2702;&#xFE0F; Particionamento</span>
+            </button>
+            <div id="m13-t6" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Limites de contexto, uso agressivo de /clear entre tarefas e estrategias de particionamento para manter o modelo focado e preciso.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Conversas longas degradam qualidade. Saber quando limpar e como particionar trabalho entre sessoes e disciplina fundamental.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Context window limits, /clear, session partitioning, task isolation, context refresh, compaction strategies.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-start gap-3">
+          <button onclick="openModal('modulo-1-3.html')" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Ver em Modal</button>
+          <a href="modulo-1-3.html" class="text-neutral-400 hover:text-emerald-400 border border-dark-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Ver Completo</a>
+        </div>
+      </div>
+
+      <!-- Module 1.4 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-3 mb-2">
+          <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full flex-shrink-0">1.4</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Ferramentas e fluxo de trabalho do dev com IA</h2>
+        </div>
+        <p class="text-neutral-400 text-sm mb-6 ml-12">Panorama completo de ferramentas 2026 e como integrar IA no fluxo de desenvolvimento real.</p>
+
+        <div class="space-y-3 mb-6">
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m14-t1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F5FA;&#xFE0F; Panorama 2026</span>
+            </button>
+            <div id="m14-t1" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">O ecossistema de ferramentas de dev com IA em 2026: Claude Code, Cursor, GitHub Copilot, Windsurf, Codex e Devin. O que cada uma faz e onde se destaca.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Usar a ferramenta certa pra cada tarefa e a diferenca entre produtividade e desperdicio. O mercado mudou drasticamente em 2025-2026.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">IDE-integrated tools, CLI tools, cloud agents, autonomous coding, feature comparison, pricing models.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m14-t2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F916; Claude Code</span>
+            </button>
+            <div id="m14-t2" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">A CLI da Anthropic: subagentes paralelos, model overrides, plan mode e 1M tokens de contexto. A ferramenta mais poderosa pra engenharia IA-first.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Claude Code e a referencia de capacidade em 2026. Entender suas features e limites define o teto do que voce consegue fazer com IA.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Subagentes, model overrides, plan mode, extended thinking, CLAUDE.md, skills, 1M context, session management.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m14-t3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F5A5;&#xFE0F; Cursor e Copilot</span>
+            </button>
+            <div id="m14-t3" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Cursor com Composer mode e Background Agents. GitHub Copilot com Coding Agent que transforma Issues em PRs automaticos.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Sao as ferramentas mais usadas no mercado. Conhecer suas capacidades e limites e obrigacao de qualquer dev que trabalha com IA.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Composer mode, Background Agents, Coding Agent, agent mode, multi-file editing, codebase indexing.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m14-t4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F4E6; Codex e Devin</span>
+            </button>
+            <div id="m14-t4" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">OpenAI Codex com GPT-5.x, Codex Skills e Interactive Planning. Devin com agentes autonomos e Devin Wiki pra documentacao automatica.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Representam o futuro da automacao de codigo. Entender o que ja funciona e o que ainda e hype ajuda a tomar decisoes informadas.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Codex Skills, Interactive Planning, sandbox execution, Devin Wiki, autonomous agents, task delegation.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m14-t5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F527; Fluxos praticos</span>
+            </button>
+            <div id="m14-t5" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Fluxos concretos para implementacao guiada, debugging, escrita de testes, revisao de PR e documentacao usando ferramentas de IA.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Saber os fluxos otimizados evita reinventar a roda. Patterns validados economizam tempo e produzem resultados melhores.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Implementation workflow, debug workflow, test-first workflow, PR review workflow, documentation workflow.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m14-t6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x2699;&#xFE0F; Automacao de tarefas</span>
+            </button>
+            <div id="m14-t6" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Automacao de tarefas recorrentes no ciclo de desenvolvimento: CI/CD triggers, scheduled reviews, changelog generation, dependency updates.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Tarefas repetitivas consomem horas por semana. Automatizar com IA libera tempo pra trabalho que realmente requer pensamento humano.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Task automation, scheduled agents, CI/CD integration, recurring workflows, cost optimization, automation ROI.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-start gap-3">
+          <button onclick="openModal('modulo-1-4.html')" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Ver em Modal</button>
+          <a href="modulo-1-4.html" class="text-neutral-400 hover:text-emerald-400 border border-dark-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Ver Completo</a>
+        </div>
+      </div>
+
+      <!-- Module 1.5 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-3 mb-2">
+          <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full flex-shrink-0">1.5</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Vibe Coding: da pratica casual a disciplina de engenharia</h2>
+        </div>
+        <p class="text-neutral-400 text-sm mb-6 ml-12">Numeros reais, riscos quantificados e a linha entre uso produtivo e uso irresponsavel de IA.</p>
+
+        <div class="space-y-3 mb-6">
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m15-t1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F3B8; O que e Vibe Coding</span>
+            </button>
+            <div id="m15-t1" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">A diferenca entre uso casual ("vibe coding") e uso disciplinado de IA. O termo cunhado por Andrej Karpathy e o que ele realmente significa na pratica.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Vibe coding sem disciplina produz divida tecnica acelerada. Entender a diferenca e o primeiro passo pra usar IA de forma sustentavel.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Vibe coding, uso casual vs disciplinado, technical debt, Karpathy definition, IA como ferramenta vs IA como muleta.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m15-t2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F4CA; Numeros reais</span>
+            </button>
+            <div id="m15-t2" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Dados concretos: 80%+ dos devs usam IA, 25% das startups YC W25 com 95%+ codigo gerado por IA. Os numeros que definem o estado atual.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Decisoes baseadas em dados, nao em hype. Saber os numeros reais ajuda a calibrar expectativas e justificar investimentos.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Adocao por devs, codigo gerado por IA, produtividade medida, YC data, Stack Overflow survey, GitHub data.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m15-t3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x26A0;&#xFE0F; Riscos quantificados</span>
+            </button>
+            <div id="m15-t3" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">45% do codigo gerado por IA tem falhas de seguranca. 2.74x mais vulnerabilidades. Os riscos concretos e mensurados de usar IA sem governanca.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Ignorar os riscos nao os elimina. Conhecer os numeros permite construir guardrails proporcionais ao risco real.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Security vulnerabilities, code quality metrics, false confidence, review necessity, risk quantification.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m15-t4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F3DB;&#xFE0F; Governanca tecnica</span>
+            </button>
+            <div id="m15-t4" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Como usar IA sem perder controle. Governanca tecnica aplicada ao desenvolvimento assistido por IA.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Sem governanca, IA acelera a criacao de problemas, nao so de solucoes. Estrutura de governanca e o que permite escalar o uso com confianca.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Governance framework, review policies, approval workflows, audit trails, compliance, accountability.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m15-t5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x2705; Criterios de producao</span>
+            </button>
+            <div id="m15-t5" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Quando aceitar geracao rapida vs exigir validacao completa. Os criterios que definem se codigo gerado por IA esta pronto pra producao.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Nem todo codigo precisa do mesmo nivel de escrutinio. Saber quando relaxar e quando apertar os criterios otimiza velocidade sem sacrificar qualidade.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Production readiness, validation tiers, risk-based review, fast-path vs full-review, quality gates.</span></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('m15-t6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x1F6AB; Zonas proibidas</span>
+            </button>
+            <div id="m15-t6" class="hidden px-4 pb-4 ml-11 space-y-2">
+              <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Auth, pagamentos e infra: areas onde IA e off-limits em organizacoes maduras. Os dominios onde o risco de usar IA supera o beneficio.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Errar em auth ou pagamentos pode custar milhoes. Saber onde nao usar IA e tao importante quanto saber onde usar.</span></div>
+              <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Security-critical code, payment systems, infrastructure code, compliance requirements, human-only zones, risk assessment.</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-start gap-3">
+          <button onclick="openModal('modulo-1-5.html')" class="bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/10 border border-emerald-500/30 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Ver em Modal</button>
+          <a href="modulo-1-5.html" class="text-neutral-400 hover:text-emerald-400 border border-dark-600 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Ver Completo</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="../../index.html" class="flex items-center justify-start gap-2 text-neutral-400 hover:text-emerald-400 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm font-medium">Voltar</span>
+        </a>
+        <a href="../trilha2/index.html" class="flex items-center justify-start gap-2 text-blue-400 hover:text-blue-300 transition-colors">
+          <span class="text-sm font-medium">Proxima Trilha: T2 Agentic</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-dark-700 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>DEV2K6 - Engenharia de Software com IA Avancada - 2026</p>
+      <p class="mt-2"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="module-modal" class="fixed inset-0 z-[100] hidden">
+    <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeModal()"></div>
+    <div class="relative w-full h-full flex items-center justify-center p-4">
+      <div class="bg-dark-900 border border-dark-700 rounded-2xl w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden">
+        <div class="flex items-center justify-between p-4 border-b border-dark-700">
+          <span class="text-emerald-400 font-semibold text-sm">Modulo</span>
+          <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <iframe id="modal-iframe" class="flex-1 w-full" frameborder="0"></iframe>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Toggle topics
+    function toggleTopic(id) {
+      const el = document.getElementById(id);
+      if (el) el.classList.toggle('hidden');
+    }
+
+    // Modal
+    function openModal(src) {
+      document.getElementById('modal-iframe').src = src;
+      document.getElementById('module-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('module-modal').classList.add('hidden');
+      document.getElementById('modal-iframe').src = '';
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 3.4 - Estrategia de adocao em times de engenharia | DEV2K6</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - Part 1: Base overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - Part 2: Purple accent */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    /* Light mode - Emerald accent (for T1 nav link) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+
+    /* Light mode - Blue accent (for T2 nav link) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - Part 3: Remove gradients + special colors */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - Part 4: Nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="../../index.html" class="text-yellow-400 font-bold text-lg hover:text-yellow-300 transition-colors">
+            <span class="text-xl">&#x1F4BB;</span> DEV2K6
+          </a>
+          <span class="text-neutral-500 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline transition-colors">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T1 Fundamentos</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T2 Agentic</a>
+            <a href="index.html" class="text-purple-400 bg-purple-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T3 Escala</a>
+          </div>
+
+          <div class="flex md:hidden items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T1</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T2</a>
+            <a href="index.html" class="text-purple-400 bg-purple-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T3</a>
+          </div>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" title="Alternar tema">
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="icon-moon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-24 pb-12 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-900"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <a href="index.html" class="inline-flex items-center gap-2 text-purple-400 hover:bg-purple-500/10 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors mb-6">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Voltar para Trilha 3
+      </a>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="bg-purple-500/20 text-purple-400 text-sm font-bold px-4 py-1.5 rounded-full border border-purple-500/30">Modulo 3.4</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-neutral-100 mb-4">
+        Estrategia de adocao em times de engenharia
+      </h1>
+      <p class="text-lg text-neutral-400 max-w-3xl leading-relaxed">
+        Numeros reais de adocao, metricas DORA + SPACE, planos de 90 dias e ROI calculavel.
+      </p>
+    </div>
+  </section>
+
+  <!-- Topics -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- Topic 1 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">1</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4CA; Numeros de marco 2026 - 92% dos devs usam IA, 41% do codigo e gerado</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Os dados concretos de adocao em 2026: 92% dos devs usam IA no trabalho, 41% do codigo novo e gerado por IA. Produtividade medida: 3.6h/semana economizadas, +60% PRs mergeados, -24% cycle time.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Dados concretos vencem opinioes. Conhecer os numeros reais permite argumentar com lideranca, calibrar expectativas e identificar onde seu time esta em relacao ao mercado.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Adoption rates, code generation percentage, productivity metrics, quality tradeoffs (1.7x issues sem governanca), benchmark data.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 2 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">2</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4CF; Metricas que importam - DORA + SPACE + DX Core 4 + Flow metrics</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Os frameworks de metricas relevantes para medir impacto de IA em times de engenharia. DORA (deployment frequency, lead time, MTTR, change failure rate), SPACE (satisfaction, performance, activity, communication, efficiency), DX Core 4 e Flow metrics.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Sem metricas, voce nao sabe se IA esta ajudando ou atrapalhando. "Parece mais rapido" nao e metrica. Medir antes e depois com frameworks validados e o que permite decisoes informadas sobre investimento em ferramentas e treinamento.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">DORA metrics, SPACE framework, developer experience, flow state, cycle time, review time, code churn, rework rate.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 3 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">3</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F6A6; Modelo de adocao - Read-only primeiro, write depois</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">O modelo de adocao progressiva que funciona: comecar com uso read-only (explicacao, documentacao, entendimento de codigo), depois assistido com review obrigatorio, depois agentes com guardrails definidos.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Pular direto para geracao de codigo sem dominar leitura assistida e context engineering gera resultados ruins e resistencia no time. A progressao read-only > assistido > agentic e o que funciona na pratica.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Progressive adoption, read-only phase, assisted phase, agentic phase, go/no-go criteria, rollback plan, champion model.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 4 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">4</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4DA; Onboarding que funciona - Context engineering, nao so "como usar Copilot"</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Onboarding que ensina as habilidades certas: context engineering, prompt structure, validation practices, tool selection. Nao apenas "como instalar e usar" a ferramenta, mas como pensar sobre IA como parte do fluxo de engenharia.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">O bloqueio real de adocao e skill gap, nao tecnologia (Deloitte 2026). Times que investem em onboarding estruturado reportam 3x mais retencao de praticas corretas vs times que so distribuem licencas.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Skill-based onboarding, context engineering training, validation habits, tool mastery path, mentoring program, pair programming com IA.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 5 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">5</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4CB; Classificacao de tarefas - Assistidas, automatizadas ou humanas</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Classificar cada tipo de tarefa do time: quais devem ser assistidas por IA, quais podem ser totalmente automatizadas e quais devem permanecer exclusivamente humanas. A classificacao depende do risco, complexidade e necessidade de julgamento.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Nem tudo deve ser automatizado e nem tudo precisa ser manual. A classificacao correta maximiza o ROI de IA concentrando investimento onde o retorno e maior e mantendo humanos onde o risco e critico.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Task classification matrix, risk-based categorization, automation candidates, human-only tasks, hybrid workflows, ROI per task type.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 6 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">6</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4B0; ROI e caso de negocio - Custo vs horas economizadas vs bugs evitados</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Calcular o retorno sobre investimento real de IA em engenharia: custo das ferramentas + tokens vs horas dev economizadas + bugs evitados + tempo de review reduzido. Montar caso de negocio para lideranca tecnica.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Lideranca decide com numeros, nao com entusiasmo. Um caso de negocio solido com ROI calculado e o que transforma "queremos usar IA" em budget aprovado e suporte organizacional.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">ROI calculation, total cost of ownership, productivity gains measurement, quality improvement metrics, business case template, executive presentation.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Exercicios -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-100 mb-8 flex items-center gap-3">
+        <span class="bg-purple-500/20 text-purple-400 p-2 rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        </span>
+        Exercicios
+      </h2>
+
+      <div class="space-y-6">
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-2.5 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-0.5">Exercicio</span>
+            <h3 class="text-lg font-semibold text-neutral-100">Plano de adocao em 90 dias (90 min)</h3>
+          </div>
+          <p class="text-neutral-400 text-sm ml-14">Plano completo para time de 8 devs: semana 1-4 (read-only: explicacao, doc, testes), semana 5-8 (assistido com review obrigatorio), semana 9-12 (agentes com guardrails definidos). Metricas de sucesso para cada fase. Criterios de go/no-go entre fases.</p>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-2.5 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-0.5">Lab</span>
+            <h3 class="text-lg font-semibold text-neutral-100">Onboarding kit completo (120 min)</h3>
+          </div>
+          <p class="text-neutral-400 text-sm ml-14">Montar kit para novo dev: CLAUDE.md padrao do time, biblioteca de prompts testados, lista de do/don't, fluxo de trabalho documentado passo a passo, checklist de review para codigo gerado por IA, FAQ com erros comuns.</p>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-2.5 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-0.5">Exercicio</span>
+            <h3 class="text-lg font-semibold text-neutral-100">Matriz de decisao por tarefa (45 min)</h3>
+          </div>
+          <p class="text-neutral-400 text-sm ml-14">Para cada tipo de tarefa do time (bug fix, feature, refactor, migration, doc, test, review, deploy, incident response), classificar: AI-appropriate, human-required, ou hibrido. Justificar cada decisao com dados e riscos.</p>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-2.5 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-0.5">Exercicio</span>
+            <h3 class="text-lg font-semibold text-neutral-100">ROI real (60 min)</h3>
+          </div>
+          <p class="text-neutral-400 text-sm ml-14">Calcular ROI com dados reais ou simulados: custo das ferramentas + tokens vs. horas dev economizadas + bugs evitados + tempo de review reduzido. Montar apresentacao de caso de negocio para lideranca tecnica em 5 slides.</p>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-2.5 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-0.5">Lab</span>
+            <h3 class="text-lg font-semibold text-neutral-100">Retrospectiva de AI adoption (45 min)</h3>
+          </div>
+          <p class="text-neutral-400 text-sm ml-14">Simular retrospectiva de time apos 3 meses usando IA: o que funcionou, o que nao funcionou, o que surpreendeu, o que deve mudar. Template estruturado com dados quantitativos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="modulo-3-3.html" class="flex items-center gap-2 text-purple-400 hover:bg-purple-500/10 px-4 py-3 rounded-xl transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="font-medium">Modulo 3.3</span>
+        </a>
+        <a href="modulo-3-5.html" class="flex items-center gap-2 text-purple-400 hover:bg-purple-500/10 px-4 py-3 rounded-xl transition-colors">
+          <span class="font-medium">Modulo 3.5</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-dark-700 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>DEV2K6 - Engenharia de Software com IA Avancada - 2026</p>
+      <p class="mt-2"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trilha 3 - Qualidade, Seguranca e Adocao em Escala | DEV2K6</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - Part 1: Base overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - Part 2: Purple accent */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    /* Light mode - Emerald accent (for T1 nav link) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+
+    /* Light mode - Blue accent (for T2 nav link) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - Part 3: Remove gradients + special colors */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - Part 4: Nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="../../index.html" class="text-yellow-400 font-bold text-lg hover:text-yellow-300 transition-colors">
+            <span class="text-xl">&#x1F4BB;</span> DEV2K6
+          </a>
+          <span class="text-neutral-500 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline transition-colors">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T1 Fundamentos</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T2 Agentic</a>
+            <a href="index.html" class="text-purple-400 bg-purple-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T3 Escala</a>
+          </div>
+
+          <div class="flex md:hidden items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T1</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T2</a>
+            <a href="index.html" class="text-purple-400 bg-purple-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T3</a>
+          </div>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" title="Alternar tema">
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="icon-moon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-24 pb-16 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-900"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-start gap-3 mb-6">
+        <span class="bg-purple-500/20 text-purple-400 text-sm font-bold px-4 py-1.5 rounded-full border border-purple-500/30">Trilha 3</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-neutral-100 mb-4">
+        Qualidade, Seguranca e Adocao em Escala
+      </h1>
+      <p class="text-lg text-neutral-400 max-w-3xl mb-8 leading-relaxed">
+        De codigo individual pra padrao de time. Qualidade, governanca e metricas que importam
+      </p>
+
+      <!-- Stats -->
+      <div class="flex flex-wrap justify-start gap-4">
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-purple-400">5</span>
+          <span class="text-neutral-400 text-sm ml-2">Modulos</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-purple-400">~30</span>
+          <span class="text-neutral-400 text-sm ml-2">Topicos</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-purple-400">~2.5h</span>
+          <span class="text-neutral-400 text-sm ml-2">Duracao</span>
+        </div>
+        <div class="bg-dark-800 border border-dark-700 rounded-xl px-5 py-3">
+          <span class="text-2xl font-bold text-purple-400">Avancado</span>
+          <span class="text-neutral-400 text-sm ml-2">Nivel</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Module Cards -->
+  <section class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- Module 3.1 - Padroes modernos para uso sustentavel de LLMs -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-4 mb-2">
+          <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-3 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-1">3.1</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Padroes modernos para uso sustentavel de LLMs</h2>
+        </div>
+        <p class="text-neutral-400 mb-6 ml-14">Rules, skills, agents.md e padroes reutilizaveis. Do uso individual ao padrao de time versionado.</p>
+
+        <div class="space-y-3 mb-6">
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t31-1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F4E6; Contexto solto vs padronizado - Rules, skills, agents.md e padroes reutilizaveis</span>
+            </button>
+            <div id="t31-1" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">A diferenca entre dar contexto ad-hoc ao modelo (copiar-colar manual) e estruturar esse contexto em artefatos versionados: rules files, skills directories, agents.md e bibliotecas de prompts. Cada formato tem um proposito e escopo diferente.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Contexto solto nao escala. Quando voce tem 5 devs usando IA, cada um dando instrucoes diferentes, o output e inconsistente. Padronizar contexto em artefatos versionados garante que todos os agentes se comportam da mesma forma.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">CLAUDE.md, .cursorrules, agents.md, skills directories, prompt libraries, context-as-code, versionamento de contexto.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t31-2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F3AF; Encapsulando comportamento - IA previsivel atraves de padroes claros</span>
+            </button>
+            <div id="t31-2" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Como encapsular comportamento de IA de forma previsivel. Definir contratos claros: dado este input e estas regras, o agente deve produzir este tipo de output. Transformar comportamento emergente em comportamento deterministico.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">IA sem guardrails e imprevisivel. Encapsular comportamento em padroes claros reduz variancia e aumenta confianca. Times que fazem isso reportam 80%+ de aderencia nas primeiras 150 instrucoes.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Behavioral contracts, instruction compliance, output templates, guardrails, predictability vs flexibility trade-off, instruction budget (~150-200 rules).</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t31-3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F91D; Contratos humano-agente - Regras e convencoes de uso entre humanos e IA</span>
+            </button>
+            <div id="t31-3" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Definir explicitamente o que o agente pode e nao pode fazer. Quais decisoes ele toma sozinho, quais precisam de aprovacao humana, quais sao proibidas. Convencoes escritas que governam a interacao humano-IA.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Sem contratos claros, o agente toma decisoes que deveriam ser humanas e nao toma as que poderia. Definir limites formais reduz risco e aumenta a autonomia util do agente dentro de fronteiras seguras.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Autonomy levels, decision boundaries, approval workflows, prohibited actions, permission scoping, trust tiers, escalation policies.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t31-4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F9E9; Skills como unidades reutilizaveis - Capacidades modulares do agente</span>
+            </button>
+            <div id="t31-4" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Skills sao unidades reutilizaveis de capacidade do agente. Cada skill encapsula um comportamento especifico (code review, geracao de testes, documentacao) com seu proprio prompt, ferramentas e criterios de validacao.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Em vez de reescrever o mesmo prompt toda vez, voce cria skills que qualquer membro do time pode invocar com resultado consistente. Skills bem feitas sao como funcoes: input definido, output previsivel, testavel.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Skill definition, trigger conditions, input/output contracts, skill testing, skill composition, skill versioning, skill discovery.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t31-5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x2696;&#xFE0F; Trade-offs de padronizacao - Flexibilidade vs consistencia vs manutencao</span>
+            </button>
+            <div id="t31-5" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Os trade-offs reais entre flexibilidade (cada dev configura como quer), consistencia (todos usam o mesmo padrao) e manutencao (quem atualiza os padroes). Nenhum extremo funciona.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Padronizacao excessiva engessa e gera resistencia. Flexibilidade total gera caos. O ponto ideal varia por time e maturidade. Saber calibrar e habilidade de tech lead.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Convention over configuration, shared vs personal rules, maintenance burden, adoption resistance, progressive standardization, escape hatches.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t31-6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x1F3E2; Padronizacao cross-team - CLAUDE.md como asset de time versionado</span>
+            </button>
+            <div id="t31-6" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Tratar CLAUDE.md e rules files como assets de time, versionados e revisados como codigo. Padronizacao cross-team com formato unico na organizacao para que agentes se comportem de forma consistente independente de quem invoca.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Sem padrao organizacional, cada time reinventa o formato de rules. Com padrao unico, um dev que muda de time ja sabe como funciona. Alem disso, permite metricas de aderencia e melhoria continua.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Organizational standards, template repositories, CLAUDE.md code review, CHANGELOG de regras, compliance metrics, cross-team sharing.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-start gap-3 ml-14">
+          <button onclick="openModal('modulo-3-1.html')" class="bg-purple-500/20 text-purple-400 border border-purple-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-500/10 transition-colors">Ver em Modal</button>
+          <a href="modulo-3-1.html" class="text-neutral-400 hover:text-purple-400 text-sm font-medium transition-colors">Ver Completo &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Module 3.2 - Qualidade de software com IA no ciclo completo -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-4 mb-2">
+          <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-3 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-1">3.2</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Qualidade de software com IA no ciclo completo</h2>
+        </div>
+        <p class="text-neutral-400 mb-6 ml-14">Testes, code review, CI/CD self-correcting e mutation testing. IA na qualidade do inicio ao deploy.</p>
+
+        <div class="space-y-3 mb-6">
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t32-1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F9EA; Geracao e revisao de testes - Unitarios, integracao e contratos com IA</span>
+            </button>
+            <div id="t32-1" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Usar IA para gerar testes unitarios, de integracao e de contrato, e tambem para revisar testes existentes. A IA identifica edge cases que o dev nao pensou, gaps de cobertura e testes que nao testam nada util.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Testes sao a base de qualidade, mas escrever bons testes e tedioso e demorado. A IA acelera drasticamente a geracao e, mais importante, a revisao critica de testes existentes que podem estar dando falsa confianca.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Test generation prompts, edge case discovery, coverage gap analysis, contract testing, test review patterns, assertion quality.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t32-2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F50D; AI Code Review em producao - CodeRabbit, PR-Agent, Snyk Code</span>
+            </button>
+            <div id="t32-2" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Ferramentas de code review automatizado com IA que operam em PRs reais. CodeRabbit (2M+ repos), PR-Agent, Anthropic Code Review e Snyk Code. Cada uma com abordagem diferente: semantica, seguranca, estilo.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Code review humano e gargalo em times de todos os tamanhos. AI code review nao substitui humanos mas filtra problemas obvios, libera reviewers para focar em logica e arquitetura. Times reportam 40-60% reducao em tempo de review.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Semantic review vs syntactic review, false positive rate, review fatigue, tool comparison, integration com GitHub/GitLab, customizacao de regras.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t32-3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F6E1;&#xFE0F; Guardrails de qualidade - Detectar inconsistencias, gaps e riscos de regressao</span>
+            </button>
+            <div id="t32-3" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Usar IA para detectar inconsistencias no codigo, gaps de cobertura de testes e riscos de regressao antes que cheguem a producao. Guardrails automatizados que impedem mudancas frageis de serem mergeadas.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Times que shipam mais rapido com IA mas sem guardrails quebram mais. O custo oculto de velocidade sem qualidade e incidentes, hotfixes e divida tecnica acelerada. Guardrails sao o que permitem velocidade sustentavel.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Quality gates automatizados, regression risk scoring, coverage threshold enforcement, fragile change detection, merge policies com IA.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t32-4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F504; Rastreabilidade - Intencao, implementacao e evidencia de qualidade</span>
+            </button>
+            <div id="t32-4" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Manter rastreabilidade entre a intencao (requisito/spec), a implementacao (codigo) e a evidencia de qualidade (testes/review). Saber por que cada linha de codigo existe e como foi validada.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Quando um bug aparece em producao, voce precisa rastrear: qual era o requisito? O codigo implementa corretamente? Os testes cobrem o caso? Sem rastreabilidade, debug e arqueologia. Com ela, e navegacao.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Requirement traceability, spec-to-code linking, test coverage mapping, audit trail, change impact analysis, compliance evidence.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t32-5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x2699;&#xFE0F; CI/CD self-correcting - Pipelines que re-implementam em vez de so falhar</span>
+            </button>
+            <div id="t32-5" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Pipelines de CI/CD que, ao encontrar uma falha, usam IA para diagnosticar o problema e propor (ou aplicar) a correcao automaticamente. Em vez de apenas reportar "test failed", o pipeline tenta corrigir e re-executar.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">80% das falhas de CI sao problemas simples: import faltando, tipo errado, assertion desatualizada. IA resolve esses em segundos. O dev so precisa intervir nos 20% que requerem julgamento humano. Isso reduz drasticamente o tempo de ciclo.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Self-healing pipelines, automated fix proposals, CI failure classification, auto-retry with correction, human escalation triggers, safety limits.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t32-6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x1F9EC; Mutation testing + AI - Medir robustez real dos testes</span>
+            </button>
+            <div id="t32-6" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Mutation testing injeta mudancas no codigo (mutantes) e verifica se os testes detectam. Se um mutante sobrevive, os testes tem um gap. Combinado com IA, voce nao so detecta gaps mas gera testes que matam os mutantes sobreviventes.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Code coverage mente. 100% coverage nao garante que os testes detectam bugs. Mutation testing mede a qualidade real dos testes. Com IA, o ciclo de melhorar testes baseado em mutantes sobreviventes e automatizado.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Mutation operators, mutant survival rate, mutation score, Stryker/Pitest, AI-generated tests para mutantes, coverage vs mutation score.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-start gap-3 ml-14">
+          <button onclick="openModal('modulo-3-2.html')" class="bg-purple-500/20 text-purple-400 border border-purple-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-500/10 transition-colors">Ver em Modal</button>
+          <a href="modulo-3-2.html" class="text-neutral-400 hover:text-purple-400 text-sm font-medium transition-colors">Ver Completo &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Module 3.3 - Seguranca, governanca e uso corporativo -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-4 mb-2">
+          <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-3 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-1">3.3</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Seguranca, governanca e uso corporativo</h2>
+        </div>
+        <p class="text-neutral-400 mb-6 ml-14">Prompt injection, memory poisoning, EU AI Act e politicas de uso para times e empresas.</p>
+
+        <div class="space-y-3 mb-6">
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t33-1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F4A5; Prompt injection - O vetor de ataque definidor de 2026</span>
+            </button>
+            <div id="t33-1" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Prompt injection e a tecnica de manipular o comportamento de um LLM atraves de inputs maliciosos. Inclui injecao direta (no prompt do usuario), indireta (via dados que o modelo le) e via tools (dados retornados por ferramentas contendo instrucoes maliciosas).</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">E o vetor de ataque mais relevante para aplicacoes LLM em 2026. Nenhuma defesa e 100% eficaz, mas entender os padroes de ataque permite construir camadas de protecao que reduzem drasticamente o risco.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Direct injection, indirect injection, tool poisoning, data exfiltration via prompts, jailbreaking, defense layers, input sanitization.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t33-2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F9E0; Memory poisoning e RAG injection - Ataques persistentes</span>
+            </button>
+            <div id="t33-2" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Memory poisoning injeta informacao maliciosa na memoria persistente do agente. Embedding-level injection envenena pipelines RAG com documentos que contem instrucoes ocultas. Ambos sao ataques que persistem entre sessoes.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Estes ataques sao mais perigosos que prompt injection porque persistem. Uma vez que a memoria ou o indice RAG esta envenenado, todos os usuarios do sistema sao afetados ate a limpeza. Detectar e prevenir requer estrategias especificas.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Persistent poisoning, embedding manipulation, RAG pipeline security, memory validation, content integrity checks, source verification.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t33-3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F3DB;&#xFE0F; Governance-containment gap - 58% monitoram, so 37% contem</span>
+            </button>
+            <div id="t33-3" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">O gap entre monitorar riscos de IA e efetivamente conte-los. Pesquisas mostram que 58% das organizacoes monitoram uso de IA, mas apenas 37% tem mecanismos de contencao efetivos. "Rules fail at the prompt, succeed at the boundary."</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Monitoramento sem contencao e como ter alarme de incendio sem extintor. Voce sabe que algo deu errado mas nao consegue parar. Construir contencao efetiva e o que separa organizacoes maduras das que estao apenas checando uma caixa.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Monitoring vs containment, boundary enforcement, runtime guardrails, input/output validation, sandboxing, permission scoping, kill switches.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t33-4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F310; EU AI Act - Fases de enforcement 2025-2026</span>
+            </button>
+            <div id="t33-4" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">A regulamentacao europeia de IA com fases de enforcement rolando em 2025-2026. Classifica sistemas de IA por risco (inaceitavel, alto, limitado, minimo) e impoe obrigacoes proporcionais. Afeta qualquer empresa que opera na UE.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Compliance nao e opcional para empresas que operam na UE. Multas podem chegar a 7% do faturamento global. Alem disso, os principios do AI Act (transparencia, explicabilidade, supervisao humana) sao boas praticas independente de regulacao.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Risk classification, transparency obligations, human oversight requirements, conformity assessment, documentation requirements, enforcement timeline.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t33-5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F6E1;&#xFE0F; Defesas praticas - Input/output validation, sandboxing e permissoes</span>
+            </button>
+            <div id="t33-5" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">As defesas concretas que funcionam: validar inputs antes de enviar ao modelo, validar outputs antes de executar, sandboxing de execucao, principio do menor privilegio e separacao de dados sensiveis.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Regras no prompt falham. Defesas na fronteira do sistema funcionam. Input validation, output filtering e sandboxing sao as tres camadas que realmente protegem. Sem elas, qualquer sistema com LLM e vulneravel.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Input sanitization, output validation, execution sandboxing, least privilege, data classification, context scoping, anonimizacao.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t33-6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x1F4DC; Politicas de uso - Para times e empresas</span>
+            </button>
+            <div id="t33-6" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Criar politicas completas de uso de IA para times e empresas: o que pode ir para API, classificacao de dados, tarefas AI-appropriate vs human-required, como auditar e como medir compliance.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Sem politica formal, cada dev decide sozinho o que enviar para a API. Isso gera riscos de vazamento de dados, inconsistencia e problemas legais. Uma politica clara protege o time e a empresa.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Data classification (publico/interno/confidencial/restrito), API usage policies, audit procedures, compliance metrics, acceptable use guidelines.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-start gap-3 ml-14">
+          <button onclick="openModal('modulo-3-3.html')" class="bg-purple-500/20 text-purple-400 border border-purple-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-500/10 transition-colors">Ver em Modal</button>
+          <a href="modulo-3-3.html" class="text-neutral-400 hover:text-purple-400 text-sm font-medium transition-colors">Ver Completo &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Module 3.4 - Estrategia de adocao em times de engenharia -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-4 mb-2">
+          <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-3 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-1">3.4</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Estrategia de adocao em times de engenharia</h2>
+        </div>
+        <p class="text-neutral-400 mb-6 ml-14">Numeros reais de adocao, metricas DORA + SPACE, planos de 90 dias e ROI calculavel.</p>
+
+        <div class="space-y-3 mb-6">
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t34-1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F4CA; Numeros de marco 2026 - 92% dos devs usam IA, 41% do codigo e gerado</span>
+            </button>
+            <div id="t34-1" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Os dados concretos de adocao em 2026: 92% dos devs usam IA no trabalho, 41% do codigo novo e gerado por IA. Produtividade medida: 3.6h/semana economizadas, +60% PRs mergeados, -24% cycle time.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Dados concretos vencem opinioes. Conhecer os numeros reais permite argumentar com lideranca, calibrar expectativas e identificar onde seu time esta em relacao ao mercado.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Adoption rates, code generation percentage, productivity metrics, quality tradeoffs (1.7x issues sem governanca), benchmark data.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t34-2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F4CF; Metricas que importam - DORA + SPACE + DX Core 4 + Flow metrics</span>
+            </button>
+            <div id="t34-2" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Os frameworks de metricas relevantes para medir impacto de IA em times de engenharia. DORA (deployment frequency, lead time, MTTR, change failure rate), SPACE (satisfaction, performance, activity, communication, efficiency), DX Core 4 e Flow metrics.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Sem metricas, voce nao sabe se IA esta ajudando ou atrapalhando. "Parece mais rapido" nao e metrica. Medir antes e depois com frameworks validados e o que permite decisoes informadas sobre investimento em ferramentas e treinamento.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">DORA metrics, SPACE framework, developer experience, flow state, cycle time, review time, code churn, rework rate.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t34-3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F6A6; Modelo de adocao - Read-only primeiro, write depois</span>
+            </button>
+            <div id="t34-3" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">O modelo de adocao progressiva que funciona: comecar com uso read-only (explicacao, documentacao, entendimento de codigo), depois assistido com review obrigatorio, depois agentes com guardrails definidos.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Pular direto para geracao de codigo sem dominar leitura assistida e context engineering gera resultados ruins e resistencia no time. A progressao read-only > assistido > agentic e o que funciona na pratica.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Progressive adoption, read-only phase, assisted phase, agentic phase, go/no-go criteria, rollback plan, champion model.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t34-4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F4DA; Onboarding que funciona - Context engineering, nao so "como usar Copilot"</span>
+            </button>
+            <div id="t34-4" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Onboarding que ensina as habilidades certas: context engineering, prompt structure, validation practices, tool selection. Nao apenas "como instalar e usar" a ferramenta, mas como pensar sobre IA como parte do fluxo de engenharia.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">O bloqueio real de adocao e skill gap, nao tecnologia (Deloitte 2026). Times que investem em onboarding estruturado reportam 3x mais retencao de praticas corretas vs times que so distribuem licencas.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Skill-based onboarding, context engineering training, validation habits, tool mastery path, mentoring program, pair programming com IA.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t34-5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F4CB; Classificacao de tarefas - Assistidas, automatizadas ou humanas</span>
+            </button>
+            <div id="t34-5" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Classificar cada tipo de tarefa do time: quais devem ser assistidas por IA, quais podem ser totalmente automatizadas e quais devem permanecer exclusivamente humanas. A classificacao depende do risco, complexidade e necessidade de julgamento.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Nem tudo deve ser automatizado e nem tudo precisa ser manual. A classificacao correta maximiza o ROI de IA concentrando investimento onde o retorno e maior e mantendo humanos onde o risco e critico.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Task classification matrix, risk-based categorization, automation candidates, human-only tasks, hybrid workflows, ROI per task type.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t34-6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x1F4B0; ROI e caso de negocio - Custo vs horas economizadas vs bugs evitados</span>
+            </button>
+            <div id="t34-6" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Calcular o retorno sobre investimento real de IA em engenharia: custo das ferramentas + tokens vs horas dev economizadas + bugs evitados + tempo de review reduzido. Montar caso de negocio para lideranca tecnica.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Lideranca decide com numeros, nao com entusiasmo. Um caso de negocio solido com ROI calculado e o que transforma "queremos usar IA" em budget aprovado e suporte organizacional.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">ROI calculation, total cost of ownership, productivity gains measurement, quality improvement metrics, business case template, executive presentation.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-start gap-3 ml-14">
+          <button onclick="openModal('modulo-3-4.html')" class="bg-purple-500/20 text-purple-400 border border-purple-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-500/10 transition-colors">Ver em Modal</button>
+          <a href="modulo-3-4.html" class="text-neutral-400 hover:text-purple-400 text-sm font-medium transition-colors">Ver Completo &rarr;</a>
+        </div>
+      </div>
+
+      <!-- Module 3.5 - Projeto aplicado integrador (Capstone) -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start justify-start gap-4 mb-2">
+          <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-3 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-1">3.5</span>
+          <h2 class="text-2xl font-bold text-neutral-100">Projeto aplicado integrador (Capstone)</h2>
+        </div>
+        <p class="text-neutral-400 mb-6 ml-14">Do design doc a implementacao completa. Pipeline multiagente, spec-driven, com qualidade e governanca aplicadas.</p>
+
+        <div class="space-y-3 mb-6">
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t35-1')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+              <span class="text-neutral-100 font-medium">&#x1F4CB; Do design doc a implementacao - Planejamento completo de feature real</span>
+            </button>
+            <div id="t35-1" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">O processo completo de planejar e implementar uma feature real com IA: do design doc inicial, passando pela especificacao estruturada, decomposicao em tasks, implementacao assistida e validacao contra criterios de aceite.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">O capstone integra todas as habilidades do curso num projeto real. Nao e exercicio descartavel - e uma ferramenta ou sistema que o aluno vai usar no dia a dia. A validacao e contra criterios reais de producao.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Design doc, spec-driven planning, task decomposition, iterative implementation, acceptance criteria, production readiness.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t35-2')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+              <span class="text-neutral-100 font-medium">&#x1F504; Pipeline multiagente - Spec &rarr; code gen &rarr; test gen &rarr; review &rarr; deploy</span>
+            </button>
+            <div id="t35-2" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Implementar um pipeline completo com agentes especializados: spec agent gera a especificacao, code agent implementa, test agent gera testes, review agent revisa e deploy agent integra. Cada estagio com quality gates.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Este e o padrao de producao para desenvolvimento com IA em 2026. Construir um pipeline funcional demonstra dominio de todas as disciplinas do curso: contexto, agentes, MCP, qualidade e governanca.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Multi-agent pipeline, stage gates, artifact passing, quality gates, feedback loops, rollback, end-to-end automation.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t35-3')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+              <span class="text-neutral-100 font-medium">&#x1F3AF; Opcao A: AI Dev Toolkit Pessoal - Assistente de desenvolvimento customizado</span>
+            </button>
+            <div id="t35-3" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Construir um assistente de desenvolvimento pessoal combinando: MCP server para seu repo principal, RAG sobre documentacao interna, agente de code review customizado e sistema de memoria com checkpoints.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Uma ferramenta real que o aluno vai usar no dia a dia. Integra MCP, RAG, agentes e context engineering num produto funcional, nao num exercicio descartavel.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Custom MCP server, personal RAG, code review agent, memory system, checkpoint/restore, daily workflow integration.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t35-4')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+              <span class="text-neutral-100 font-medium">&#x1F3AF; Opcao B: Pipeline de modernizacao - Sistema de analise e migracao de legado</span>
+            </button>
+            <div id="t35-4" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Sistema que, dado um repo legado: analisa e mapeia codebase (agente de discovery), gera relatorio de divida tecnica com priorizacao, propoe plano de migracao em etapas, executa primeira etapa com supervisao humana e gera testes de regressao.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Modernizacao de legado e o problema mais comum em empresas reais. Um pipeline automatizado de analise e migracao tem valor imediato e demonstra dominio de leitura assistida, refatoracao e qualidade.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Codebase discovery agent, tech debt scoring, migration planning, supervised execution, regression test generation, incremental migration.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t35-5')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+              <span class="text-neutral-100 font-medium">&#x1F3AF; Opcao C: Dev Knowledge Assistant - RAG + agentes para time real</span>
+            </button>
+            <div id="t35-5" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">RAG + agentes para time real: indexa documentacao, PRs, ADRs e postmortems. Interface via Slack ou Telegram. Responde perguntas tecnicas com citacao de fontes. Sabe quando nao sabe. Aprende com feedback.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Resolve o problema real de knowledge silos em times. Integra RAG, agentes, feedback loop e deployment. Tem valor imediato para qualquer time de engenharia.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Knowledge base indexing, source citation, confidence calibration, feedback loop, Slack/Telegram integration, continuous learning.</p></div>
+            </div>
+          </div>
+
+          <div class="border border-dark-700 rounded-xl overflow-hidden">
+            <button onclick="toggleTopic('t35-6')" class="w-full flex items-center justify-start gap-3 p-4 hover:bg-dark-700 transition-colors text-left">
+              <span class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+              <span class="text-neutral-100 font-medium">&#x2705; Criterios de avaliacao - Funciona, revisado, testado, documentado, seguro</span>
+            </button>
+            <div id="t35-6" class="hidden px-4 pb-4 space-y-3">
+              <div><span class="text-purple-400 font-semibold text-sm">O que e:</span><p class="text-neutral-400 text-sm mt-1">Os criterios de avaliacao do capstone: funciona e resolve problema real, codigo revisado (nao vibe coded), testes com cobertura minima 70%, documentacao tecnica (ADR, README, diagramas), seguranca aplicada e apresentacao de 15 minutos.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Por que aprender:</span><p class="text-neutral-400 text-sm mt-1">Os criterios refletem o padrao de producao real. Nao basta funcionar - precisa ser mantivel, testado, documentado e seguro. A apresentacao de decisoes tecnicas e trade-offs e a habilidade que diferencia senior de junior.</p></div>
+              <div><span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span><p class="text-neutral-400 text-sm mt-1">Production readiness checklist, code review standards, test coverage requirements, documentation standards, security audit, technical presentation.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-start gap-3 ml-14">
+          <button onclick="openModal('modulo-3-5.html')" class="bg-purple-500/20 text-purple-400 border border-purple-500/30 px-4 py-2 rounded-lg text-sm font-medium hover:bg-purple-500/10 transition-colors">Ver em Modal</button>
+          <a href="modulo-3-5.html" class="text-neutral-400 hover:text-purple-400 text-sm font-medium transition-colors">Ver Completo &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="../trilha2/index.html" class="flex items-center gap-2 text-blue-400 hover:bg-blue-500/10 px-4 py-3 rounded-xl transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="font-medium">Trilha Anterior (T2)</span>
+        </a>
+        <a href="../../index.html" class="flex items-center gap-2 text-yellow-400 hover:text-yellow-300 px-4 py-3 rounded-xl transition-colors">
+          <span class="font-medium">Voltar ao Inicio</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-dark-700 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>DEV2K6 - Engenharia de Software com IA Avancada - 2026</p>
+      <p class="mt-2"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/70 backdrop-blur-sm p-4">
+    <div class="bg-dark-800 border border-dark-700 rounded-2xl w-full max-w-5xl h-[85vh] flex flex-col overflow-hidden">
+      <div class="flex items-center justify-between p-4 border-b border-dark-700">
+        <span class="text-purple-400 font-semibold text-sm">Visualizacao do Modulo</span>
+        <button onclick="closeModal()" class="text-neutral-400 hover:text-neutral-100 transition-colors p-1">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <iframe id="modal-iframe" class="flex-1 w-full" frameborder="0"></iframe>
+    </div>
+  </div>
+
+  <script>
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // Toggle topic
+    function toggleTopic(id) {
+      const el = document.getElementById(id);
+      el.classList.toggle('hidden');
+    }
+
+    // Modal
+    function openModal(src) {
+      document.getElementById('modal-iframe').src = src;
+      document.getElementById('modal-overlay').classList.remove('hidden');
+      document.getElementById('modal-overlay').classList.add('flex');
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.add('hidden');
+      document.getElementById('modal-overlay').classList.remove('flex');
+      document.getElementById('modal-iframe').src = '';
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
+
+</body>
+</html>

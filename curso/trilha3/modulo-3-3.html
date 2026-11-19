@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 3.3 - Seguranca, governanca e uso corporativo | DEV2K6</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    /* Light mode - Part 1: Base overrides */
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    /* Light mode - Part 2: Purple accent */
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .group:hover .group-hover\:text-purple-400 { color: #7c3aed; }
+
+    /* Light mode - Emerald accent (for T1 nav link) */
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+
+    /* Light mode - Blue accent (for T2 nav link) */
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    /* Light mode - Part 3: Remove gradients + special colors */
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    /* Light mode - Part 4: Nav */
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="../../index.html" class="text-yellow-400 font-bold text-lg hover:text-yellow-300 transition-colors">
+            <span class="text-xl">&#x1F4BB;</span> DEV2K6
+          </a>
+          <span class="text-neutral-500 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline transition-colors">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T1 Fundamentos</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T2 Agentic</a>
+            <a href="index.html" class="text-purple-400 bg-purple-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T3 Escala</a>
+          </div>
+
+          <div class="flex md:hidden items-center gap-1">
+            <a href="../trilha1/index.html" class="text-emerald-400 hover:bg-emerald-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T1</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T2</a>
+            <a href="index.html" class="text-purple-400 bg-purple-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T3</a>
+          </div>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" title="Alternar tema">
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="icon-moon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-24 pb-12 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-dark-800 to-dark-900"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <a href="index.html" class="inline-flex items-center gap-2 text-purple-400 hover:bg-purple-500/10 px-3 py-1.5 rounded-lg text-sm font-medium transition-colors mb-6">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        Voltar para Trilha 3
+      </a>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="bg-purple-500/20 text-purple-400 text-sm font-bold px-4 py-1.5 rounded-full border border-purple-500/30">Modulo 3.3</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-neutral-100 mb-4">
+        Seguranca, governanca e uso corporativo
+      </h1>
+      <p class="text-lg text-neutral-400 max-w-3xl leading-relaxed">
+        Prompt injection, memory poisoning, EU AI Act e politicas de uso para times e empresas.
+      </p>
+    </div>
+  </section>
+
+  <!-- Topics -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+      <!-- Topic 1 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">1</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4A5; Prompt injection - O vetor de ataque definidor de 2026</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Prompt injection e a tecnica de manipular o comportamento de um LLM atraves de inputs maliciosos. Inclui injecao direta (no prompt do usuario), indireta (via dados que o modelo le) e via tools (dados retornados por ferramentas contendo instrucoes maliciosas).</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">E o vetor de ataque mais relevante para aplicacoes LLM em 2026. Nenhuma defesa e 100% eficaz, mas entender os padroes de ataque permite construir camadas de protecao que reduzem drasticamente o risco.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Direct injection, indirect injection, tool poisoning, data exfiltration via prompts, jailbreaking, defense layers, input sanitization.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 2 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">2</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F9E0; Memory poisoning e RAG injection - Ataques persistentes</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Memory poisoning injeta informacao maliciosa na memoria persistente do agente. Embedding-level injection envenena pipelines RAG com documentos que contem instrucoes ocultas. Ambos sao ataques que persistem entre sessoes.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Estes ataques sao mais perigosos que prompt injection porque persistem. Uma vez que a memoria ou o indice RAG esta envenenado, todos os usuarios do sistema sao afetados ate a limpeza. Detectar e prevenir requer estrategias especificas.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Persistent poisoning, embedding manipulation, RAG pipeline security, memory validation, content integrity checks, source verification.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 3 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">3</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F3DB;&#xFE0F; Governance-containment gap - 58% monitoram, so 37% contem</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">O gap entre monitorar riscos de IA e efetivamente conte-los. Pesquisas mostram que 58% das organizacoes monitoram uso de IA, mas apenas 37% tem mecanismos de contencao efetivos. "Rules fail at the prompt, succeed at the boundary."</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Monitoramento sem contencao e como ter alarme de incendio sem extintor. Voce sabe que algo deu errado mas nao consegue parar. Construir contencao efetiva e o que separa organizacoes maduras das que estao apenas checando uma caixa.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Monitoring vs containment, boundary enforcement, runtime guardrails, input/output validation, sandboxing, permission scoping, kill switches.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 4 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">4</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F310; EU AI Act - Fases de enforcement 2025-2026</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">A regulamentacao europeia de IA com fases de enforcement rolando em 2025-2026. Classifica sistemas de IA por risco (inaceitavel, alto, limitado, minimo) e impoe obrigacoes proporcionais. Afeta qualquer empresa que opera na UE.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Compliance nao e opcional para empresas que operam na UE. Multas podem chegar a 7% do faturamento global. Alem disso, os principios do AI Act (transparencia, explicabilidade, supervisao humana) sao boas praticas independente de regulacao.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Risk classification, transparency obligations, human oversight requirements, conformity assessment, documentation requirements, enforcement timeline.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 5 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">5</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F6E1;&#xFE0F; Defesas praticas - Input/output validation, sandboxing e permissoes</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">As defesas concretas que funcionam: validar inputs antes de enviar ao modelo, validar outputs antes de executar, sandboxing de execucao, principio do menor privilegio e separacao de dados sensiveis.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Regras no prompt falham. Defesas na fronteira do sistema funcionam. Input validation, output filtering e sandboxing sao as tres camadas que realmente protegem. Sem elas, qualquer sistema com LLM e vulneravel.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Input sanitization, output validation, execution sandboxing, least privilege, data classification, context scoping, anonimizacao.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Topic 6 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-start gap-4 mb-4">
+          <span class="w-10 h-10 rounded-full bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg font-bold flex-shrink-0">6</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4DC; Politicas de uso - Para times e empresas</h2>
+        </div>
+        <div class="ml-14 space-y-4">
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">O que e:</span>
+            <p class="text-neutral-400 text-sm mt-1">Criar politicas completas de uso de IA para times e empresas: o que pode ir para API, classificacao de dados, tarefas AI-appropriate vs human-required, como auditar e como medir compliance.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Por que aprender:</span>
+            <p class="text-neutral-400 text-sm mt-1">Sem politica formal, cada dev decide sozinho o que enviar para a API. Isso gera riscos de vazamento de dados, inconsistencia e problemas legais. Uma politica clara protege o time e a empresa.</p>
+          </div>
+          <div>
+            <span class="text-purple-400 font-semibold text-sm">Conceitos-chave:</span>
+            <p class="text-neutral-400 text-sm mt-1">Data classification (publico/interno/confidencial/restrito), API usage policies, audit procedures, compliance metrics, acceptable use guidelines.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Exercicios -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-100 mb-8 flex items-center gap-3">
+        <span class="bg-purple-500/20 text-purple-400 p-2 rounded-lg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        </span>
+        Exercicios
+      </h2>
+
+      <div class="space-y-6">
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-2.5 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-0.5">Lab</span>
+            <h3 class="text-lg font-semibold text-neutral-100">Prompt injection ofensivo/defensivo (60 min)</h3>
+          </div>
+          <p class="text-neutral-400 text-sm ml-14">Construir chatbot com system prompt. Metade da turma ataca (injecao direta, indireta, via dados), outra metade defende. Rodadas de 10 min com rotacao. Documentar: quais ataques funcionaram, quais defesas seguraram.</p>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-2.5 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-0.5">Exercicio</span>
+            <h3 class="text-lg font-semibold text-neutral-100">Auditoria de seguranca de agente (45 min)</h3>
+          </div>
+          <p class="text-neutral-400 text-sm ml-14">Agente com acesso a filesystem, banco de dados e API externa. Mapear TODOS os riscos (leitura indevida, escrita destrutiva, exfiltracao de dados). Definir permissoes minimas. Implementar guardrails. Testar se os guardrails seguram.</p>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-2.5 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-0.5">Exercicio</span>
+            <h3 class="text-lg font-semibold text-neutral-100">Politica de uso para time (60 min)</h3>
+          </div>
+          <p class="text-neutral-400 text-sm ml-14">Escrever politica completa: o que pode ir para API, o que nao pode, classificacao de dados (publico/interno/confidencial/restrito), tarefas AI-appropriate vs. human-required, como auditar, como medir compliance.</p>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-2.5 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-0.5">Lab</span>
+            <h3 class="text-lg font-semibold text-neutral-100">Data classification pipeline (90 min)</h3>
+          </div>
+          <p class="text-neutral-400 text-sm ml-14">Construir filtro pre-API que analisa codigo antes de enviar: detecta secrets (.env, tokens, passwords), credenciais, PII. Se encontrar: bloqueia ou anonimiza. Implementar como git pre-commit hook. Testar com 10 arquivos reais.</p>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6">
+          <div class="flex items-start gap-3 mb-3">
+            <span class="bg-purple-500/20 text-purple-400 text-xs font-bold px-2.5 py-1 rounded-full border border-purple-500/30 flex-shrink-0 mt-0.5">Exercicio</span>
+            <h3 class="text-lg font-semibold text-neutral-100">Incident response com AI (45 min)</h3>
+          </div>
+          <p class="text-neutral-400 text-sm ml-14">Cenario: agente cometeu codigo com credencial vazada em PR publico. Simular: (1) detectar, (2) revogar credencial, (3) limpar historico git, (4) post-mortem, (5) implementar controle para nao repetir.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="modulo-3-2.html" class="flex items-center gap-2 text-purple-400 hover:bg-purple-500/10 px-4 py-3 rounded-xl transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="font-medium">Modulo 3.2</span>
+        </a>
+        <a href="modulo-3-4.html" class="flex items-center gap-2 text-purple-400 hover:bg-purple-500/10 px-4 py-3 rounded-xl transition-colors">
+          <span class="font-medium">Modulo 3.4</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-dark-700 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>DEV2K6 - Engenharia de Software com IA Avancada - 2026</p>
+      <p class="mt-2"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>

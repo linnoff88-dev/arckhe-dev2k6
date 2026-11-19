@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modulo 1.5 - Vibe Coding | DEV2K6</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#FACC15',
+            dark: { 900: '#111827', 800: '#1f2937', 700: '#374151', 600: '#4b5563' }
+          }
+        }
+      }
+    }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .dark body { background-color: #111827; }
+
+    html:not(.dark) body { background-color: #f8fafc; }
+    html:not(.dark) .bg-dark-900 { background-color: #ffffff; }
+    html:not(.dark) .bg-dark-800 { background-color: #f9fafb; }
+    html:not(.dark) .bg-dark-700 { background-color: #f3f4f6; }
+    html:not(.dark) .bg-dark-600 { background-color: #e5e7eb; }
+    html:not(.dark) .text-neutral-100 { color: #111827; }
+    html:not(.dark) .text-neutral-300 { color: #4b5563; }
+    html:not(.dark) .text-neutral-400 { color: #6b7280; }
+    html:not(.dark) .text-neutral-500 { color: #9ca3af; }
+    html:not(.dark) .border-dark-600 { border-color: #d1d5db; }
+    html:not(.dark) .border-dark-700 { border-color: #e5e7eb; }
+
+    html:not(.dark) .text-emerald-400 { color: #059669; }
+    html:not(.dark) .bg-emerald-500\/20 { background-color: rgba(5, 150, 105, 0.12); }
+    html:not(.dark) .bg-emerald-500\/10 { background-color: rgba(5, 150, 105, 0.08); }
+    html:not(.dark) .border-emerald-500\/30 { border-color: rgba(5, 150, 105, 0.25); }
+    html:not(.dark) .hover\:text-emerald-400:hover { color: #059669; }
+    html:not(.dark) .hover\:bg-emerald-500\/10:hover { background-color: rgba(5, 150, 105, 0.08); }
+
+    html:not(.dark) .text-blue-400 { color: #2563eb; }
+    html:not(.dark) .bg-blue-500\/20 { background-color: rgba(37, 99, 235, 0.12); }
+    html:not(.dark) .bg-blue-500\/10 { background-color: rgba(37, 99, 235, 0.08); }
+    html:not(.dark) .border-blue-500\/30 { border-color: rgba(37, 99, 235, 0.25); }
+    html:not(.dark) .hover\:text-blue-400:hover { color: #2563eb; }
+    html:not(.dark) .hover\:bg-blue-500\/10:hover { background-color: rgba(37, 99, 235, 0.08); }
+
+    html:not(.dark) .text-purple-400 { color: #7c3aed; }
+    html:not(.dark) .bg-purple-500\/20 { background-color: rgba(124, 58, 237, 0.12); }
+    html:not(.dark) .bg-purple-500\/10 { background-color: rgba(124, 58, 237, 0.08); }
+    html:not(.dark) .border-purple-500\/30 { border-color: rgba(124, 58, 237, 0.25); }
+    html:not(.dark) .hover\:text-purple-400:hover { color: #7c3aed; }
+    html:not(.dark) .hover\:bg-purple-500\/10:hover { background-color: rgba(124, 58, 237, 0.08); }
+
+    html:not(.dark) [class*="bg-gradient-to"] { background-image: none !important; }
+    html:not(.dark) .text-primary { color: #a16207; }
+    html:not(.dark) .bg-primary\/10 { background-color: rgba(161, 98, 7, 0.08); }
+    html:not(.dark) .border-primary\/40 { border-color: rgba(161, 98, 7, 0.25); }
+    html:not(.dark) .text-sky-400 { color: #0369a1; }
+    html:not(.dark) .text-yellow-400 { color: #a16207; }
+    html:not(.dark) .hover\:text-sky-300:hover { color: #0284c7; }
+    html:not(.dark) .hover\:text-yellow-300:hover { color: #854d0e; }
+
+    html:not(.dark) .bg-dark-900\/95 { background-color: rgba(255, 255, 255, 0.95); }
+  </style>
+</head>
+<body class="bg-dark-900 text-neutral-100 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-900/95 backdrop-blur-sm border-b border-dark-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <div class="flex items-center gap-3 flex-shrink-0">
+          <a href="../../index.html" class="text-yellow-400 font-bold text-lg hover:text-yellow-300 transition-colors">
+            <span class="text-xl">&#x1F4BB;</span> DEV2K6
+          </a>
+          <span class="text-neutral-500 hidden sm:inline">|</span>
+          <a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300 text-sm font-medium hidden sm:inline transition-colors">INEMA.CLUB</a>
+        </div>
+
+        <div class="flex items-center gap-1">
+          <div class="hidden md:flex items-center gap-1">
+            <a href="index.html" class="text-emerald-400 bg-emerald-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T1 Fundamentos</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T2 Agentic</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-3 py-2 rounded-lg text-sm font-medium transition-colors">T3 Escala</a>
+          </div>
+
+          <div class="flex md:hidden items-center gap-1">
+            <a href="index.html" class="text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T1</a>
+            <a href="../trilha2/index.html" class="text-blue-400 hover:bg-blue-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T2</a>
+            <a href="../trilha3/index.html" class="text-purple-400 hover:bg-purple-500/10 px-2 py-1 rounded text-xs font-medium transition-colors">T3</a>
+          </div>
+
+          <button id="theme-toggle" class="p-2 rounded-lg bg-dark-700 hover:bg-dark-600 transition-colors ml-2" title="Alternar tema">
+            <svg id="icon-sun" class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+            <svg id="icon-moon" class="w-5 h-5 text-blue-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-24 pb-12 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/30 via-dark-800 to-dark-900"></div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-start gap-2 mb-4">
+        <a href="../../index.html" class="text-neutral-400 hover:text-neutral-300 text-sm transition-colors">Inicio</a>
+        <span class="text-neutral-500 text-sm">/</span>
+        <a href="index.html" class="text-neutral-400 hover:text-neutral-300 text-sm transition-colors">Trilha 1</a>
+        <span class="text-neutral-500 text-sm">/</span>
+        <span class="text-emerald-400 text-sm font-medium">Modulo 1.5</span>
+      </div>
+
+      <div class="flex items-center justify-start gap-3 mb-4">
+        <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full">MODULO 1.5</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-neutral-100 mb-4">
+        Vibe Coding: da pratica casual a disciplina de engenharia
+      </h1>
+      <p class="text-lg text-neutral-300 max-w-3xl leading-relaxed">
+        Numeros reais, riscos quantificados e a linha entre uso produtivo e uso irresponsavel de IA.
+      </p>
+    </div>
+  </section>
+
+  <!-- Topics -->
+  <section class="py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+
+      <!-- Topic 1 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">1</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F3B8; O que e Vibe Coding</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">A diferenca entre uso casual ("vibe coding") e uso disciplinado de IA. O termo cunhado por Andrej Karpathy e o que ele realmente significa na pratica.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Vibe coding sem disciplina produz divida tecnica acelerada. Entender a diferenca e o primeiro passo pra usar IA de forma sustentavel.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Vibe coding, uso casual vs disciplinado, technical debt, Karpathy definition, IA como ferramenta vs IA como muleta.</span></div>
+        </div>
+      </div>
+
+      <!-- Topic 2 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">2</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F4CA; Numeros reais</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Dados concretos: 80%+ dos devs usam IA, 25% das startups YC W25 com 95%+ codigo gerado por IA. Os numeros que definem o estado atual.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Decisoes baseadas em dados, nao em hype. Saber os numeros reais ajuda a calibrar expectativas e justificar investimentos.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Adocao por devs, codigo gerado por IA, produtividade medida, YC data, Stack Overflow survey, GitHub data.</span></div>
+        </div>
+      </div>
+
+      <!-- Topic 3 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">3</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x26A0;&#xFE0F; Riscos quantificados</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">45% do codigo gerado por IA tem falhas de seguranca. 2.74x mais vulnerabilidades. Os riscos concretos e mensurados de usar IA sem governanca.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Ignorar os riscos nao os elimina. Conhecer os numeros permite construir guardrails proporcionais ao risco real.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Security vulnerabilities, code quality metrics, false confidence, review necessity, risk quantification.</span></div>
+        </div>
+      </div>
+
+      <!-- Topic 4 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">4</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F3DB;&#xFE0F; Governanca tecnica</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Como usar IA sem perder controle. Governanca tecnica aplicada ao desenvolvimento assistido por IA.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Sem governanca, IA acelera a criacao de problemas, nao so de solucoes. Estrutura de governanca e o que permite escalar o uso com confianca.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Governance framework, review policies, approval workflows, audit trails, compliance, accountability.</span></div>
+        </div>
+      </div>
+
+      <!-- Topic 5 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">5</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x2705; Criterios de producao</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Quando aceitar geracao rapida vs exigir validacao completa. Os criterios que definem se codigo gerado por IA esta pronto pra producao.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Nem todo codigo precisa do mesmo nivel de escrutinio. Saber quando relaxar e quando apertar os criterios otimiza velocidade sem sacrificar qualidade.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Production readiness, validation tiers, risk-based review, fast-path vs full-review, quality gates.</span></div>
+        </div>
+      </div>
+
+      <!-- Topic 6 -->
+      <div class="bg-dark-800 border border-dark-700 rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 mb-4">
+          <span class="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-sm font-bold flex-shrink-0">6</span>
+          <h2 class="text-xl font-bold text-neutral-100">&#x1F6AB; Zonas proibidas</h2>
+        </div>
+        <div class="ml-13 space-y-3 pl-2">
+          <div><span class="text-emerald-400 font-semibold text-sm">O que e:</span> <span class="text-neutral-300 text-sm">Auth, pagamentos e infra: areas onde IA e off-limits em organizacoes maduras. Os dominios onde o risco de usar IA supera o beneficio.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Por que aprender:</span> <span class="text-neutral-300 text-sm">Errar em auth ou pagamentos pode custar milhoes. Saber onde nao usar IA e tao importante quanto saber onde usar.</span></div>
+          <div><span class="text-emerald-400 font-semibold text-sm">Conceitos-chave:</span> <span class="text-neutral-300 text-sm">Security-critical code, payment systems, infrastructure code, compliance requirements, human-only zones, risk assessment.</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Exercicios -->
+  <section class="py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-2xl font-bold text-neutral-100 mb-6 flex items-center gap-3">
+        <span class="bg-emerald-500/20 text-emerald-400 w-10 h-10 rounded-full flex items-center justify-center text-lg">&#x1F4DD;</span>
+        Exercicios
+      </h2>
+
+      <div class="space-y-4">
+
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6">
+          <div class="flex items-start gap-3">
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5">LAB</span>
+            <div>
+              <h3 class="text-neutral-100 font-semibold mb-1">Vibe Coding controlado <span class="text-neutral-500 font-normal">(60 min)</span></h3>
+              <p class="text-neutral-300 text-sm leading-relaxed">Construir uma feature completa usando APENAS vibe coding: aceitar tudo do AI, sem ler o codigo. Depois: revisar linha a linha. Documentar: funciona? Tem bugs? Tem vulnerabilidades? O codigo e mantivel? Quantos problemas encontrou?</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6">
+          <div class="flex items-start gap-3">
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5">EX</span>
+            <div>
+              <h3 class="text-neutral-100 font-semibold mb-1">Broken Project <span class="text-neutral-500 font-normal">(90 min)</span></h3>
+              <p class="text-neutral-300 text-sm leading-relaxed">Receber um projeto construido com vibe coding puro. Encontrar e corrigir: bugs, code smells, vulnerabilidades de seguranca, logica errada, testes faltando.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6">
+          <div class="flex items-start gap-3">
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5">EX</span>
+            <div>
+              <h3 class="text-neutral-100 font-semibold mb-1">Mesmo feature, dois modos <span class="text-neutral-500 font-normal">(120 min)</span></h3>
+              <p class="text-neutral-300 text-sm leading-relaxed">Implementar a mesma feature duas vezes: (1) vibe coding puro, (2) spec-driven com review de cada diff. Tabela comparativa: tempo total, qualidade do codigo, bugs encontrados, cobertura de testes, divida tecnica acumulada.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-dark-800 border border-dark-700 rounded-xl p-6">
+          <div class="flex items-start gap-3">
+            <span class="bg-emerald-500/20 text-emerald-400 text-xs font-bold px-2.5 py-1 rounded-full flex-shrink-0 mt-0.5">EX</span>
+            <div>
+              <h3 class="text-neutral-100 font-semibold mb-1">Matriz de decisao <span class="text-neutral-500 font-normal">(30 min)</span></h3>
+              <p class="text-neutral-300 text-sm leading-relaxed">Para cada tipo de projeto (MVP, SaaS producao, open source lib, script interno, prototipo de cliente, sistema financeiro), definir: vibe aceitavel, assistido com review, ou 100% humano. Justificar com dados do DORA e riscos reais.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Navigation -->
+  <section class="py-12">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        <a href="modulo-1-4.html" class="flex items-center justify-start gap-2 text-neutral-400 hover:text-emerald-400 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="text-sm font-medium">Anterior: 1.4 Ferramentas</span>
+        </a>
+        <a href="index.html" class="flex items-center justify-start gap-2 text-emerald-400 hover:text-emerald-300 transition-colors">
+          <span class="text-sm font-medium">Voltar para Trilha 1</span>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-dark-700 py-8 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-neutral-500 text-sm">
+      <p>DEV2K6 - Engenharia de Software com IA Avancada - 2026</p>
+      <p class="mt-2"><a href="https://inema.club" target="_blank" class="text-sky-400 hover:text-sky-300">INEMA.CLUB</a></p>
+    </div>
+  </footer>
+
+  <script>
+    const themeToggle = document.getElementById('theme-toggle');
+    const iconSun = document.getElementById('icon-sun');
+    const iconMoon = document.getElementById('icon-moon');
+    const html = document.documentElement;
+
+    if (localStorage.getItem('theme') === 'light') {
+      html.classList.remove('dark');
+      iconSun.classList.add('hidden');
+      iconMoon.classList.remove('hidden');
+    }
+
+    themeToggle.addEventListener('click', () => {
+      html.classList.toggle('dark');
+      iconSun.classList.toggle('hidden');
+      iconMoon.classList.toggle('hidden');
+      localStorage.setItem('theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+  </script>
+
+</body>
+</html>
